@@ -67,6 +67,8 @@ userRouter.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
         return res.status(200).json({ token: token, id: id });
     }
     catch (error) {
+        //@ts-ignore
+        console.log("Error response:", error.response, error);
         return res.status(500).json({ message: "Internal Server Error", error: error });
     }
 }));

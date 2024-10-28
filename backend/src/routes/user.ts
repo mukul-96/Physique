@@ -62,6 +62,8 @@ userRouter.post("/signin", async (req: Request, res: Response) => {
         const token = jwt.sign({ id }, secret); 
         return res.status(200).json({ token:token, id:id });
     } catch (error) {
+        //@ts-ignore
+        console.log("Error response:", error.response,error);
         return res.status(500).json({ message: "Internal Server Error", error: error });
     }
 });
