@@ -21,18 +21,24 @@ function Blog() {
           {/* blog boxes */}
           <div className="flex gap-6 w-full mt-[50px] md1200:justify-center flex-wrap">
             <BlogBox
+            // @ts-ignore
+
               bgClass="box1Bg"
               date="22.10.2024"
               title="Yoga For Everyone in 2023"
               description="This is a program designed to make the practice of yoga beneficial for people of all ages, abilities, and backgrounds."
             />
             <BlogBox
+            // @ts-ignore
+
               bgClass="box2Bg"
               date="13.09.2024"
               title="Getting Back Into CrossFit After Vacation"
               description="Learn how to ease back into your CrossFit routine after a vacation with tips and strategies for success."
             />
             <BlogBox
+            // @ts-ignore
+
               bgClass="box3Bg"
               date="28.09.2024"
               title="Meet Fitness Ambassador Grace"

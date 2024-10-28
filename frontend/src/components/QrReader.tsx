@@ -55,7 +55,7 @@ const QrReader = () => {
         scanner?.current?.stop();
       }
     };
-  }, [onS]);
+  }, []);
 
   useEffect(() => {
     if (!qrOn) alert("Camera is blocked or not accessible. Please allow camera in your browser permissions and Reload.");

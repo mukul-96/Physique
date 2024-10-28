@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 interface NavbarProps {
-  branchId: number;
+  branchId: string|null|undefined;
 }
 
 export default function Navbar({ branchId }: NavbarProps) {
@@ -45,38 +45,37 @@ const NavButton = ({ icon, label, navigateTo }: { icon: JSX.Element, label: stri
   );
 };
 
+const Switch = ({ branchId }: { branchId: string | null|undefined }) => {
+  const [checked, setChecked] = useState<boolean>(false);
+  const navigate = useNavigate();
 
-const Switch = ({ branchId }: { branchId: string }) => {
-    const [checked, setChecked] = useState<boolean>(false);
-    const navigate = useNavigate();
-  
-    useEffect(() => {
-      const currentPath = window.location.pathname;
-      if (currentPath.includes(`/head/analytics/${branchId}`)) {
-        setChecked(true); 
-      }
-    }, [branchId]);
-  
-    const handleToggle = () => {
-        if (branchId === "undefined" ) {
-          navigate('/head'); 
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+    if (branchId && currentPath.includes(`/head/analytics/${branchId}`)) {
+      setChecked(true); 
+    }
+  }, [branchId]);
+
+  const handleToggle = () => {
+      if (!branchId) { 
+        navigate('/head'); 
+      } else {
+        if (checked) {
+          navigate(`/head/branch/${branchId}`); 
         } else {
-          if (checked) {
-            navigate(`/head/branch/${branchId}`); 
-          } else {
-            navigate(`/head/analytics/${branchId}`); 
-          }
-          setChecked(!checked); 
+          navigate(`/head/analytics/${branchId}`); 
         }
-      };
-  
-    return (
-      <label className="switch">
-        <input type="checkbox" checked={checked} onChange={handleToggle} />
-        <div className="slider">
-          <span className='text-2xl'><FaChartLine /></span>
-          <span className='text-2xl'><FaDumbbell /></span>
-        </div>
-      </label>
-    );
-  };
+        setChecked(!checked); 
+      }
+    };
+
+  return (
+    <label className="switch">
+      <input type="checkbox" checked={checked} onChange={handleToggle} />
+      <div className="slider">
+        <span className='text-2xl'><FaChartLine /></span>
+        <span className='text-2xl'><FaDumbbell /></span>
+      </div>
+    </label>
+  );
+};

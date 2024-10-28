@@ -28,9 +28,11 @@ const amenities = [
   'Parking',
   'Advanced Air Filtration',
   'CrossFit Area'
-];
+] as const; 
 
-const amenitiesIcons = {
+type Amenity = typeof amenities[number]; 
+
+const amenitiesIcons: Record<Amenity, string> = {
   'Cardio Machines': cycle2,
   'Free Weights': dumbell,
   'Strength Training Machines': bicepflex,
@@ -47,6 +49,7 @@ const amenitiesIcons = {
   'Advanced Air Filtration': ac,
   'CrossFit Area': bag
 };
+
 
 export default function FeaturesCard() {
   return (

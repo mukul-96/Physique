@@ -11,7 +11,7 @@ import { Testimonial } from "../components/Testimonial";
 import Navbar from "../components/head/Navbar";
 export default function BranchPage() {
   const { id } = useParams<{ id: string }>();
-  const safeId = id || ''; 
+  const safeId = id || null; 
 
   const { branchDetails, loading, error } = useFetchBranchDetails(safeId);
 
@@ -19,7 +19,7 @@ export default function BranchPage() {
   if (error) return <div>Error loading branch details: {error}</div>;
   if (!branchDetails) return <div>No branch details available</div>;
 
-  const manager = branchDetails.manager;
+  const manager = branchDetails.manager || null;
   const reviews = branchDetails.reviews;
   const trainers = branchDetails.staff.filter(
     (staff) => staff.designation === "Trainer"
@@ -48,8 +48,8 @@ export default function BranchPage() {
         </div>
         <div className="flex items-center w-1/3 m-5">
           {manager ? (
-            
-              <BranchManagerCard  manager={manager} />
+        // @ts-ignore
+      <BranchManagerCard  manager={manager} />
             )
           : (
             <div className="p-4 bg-gray-100 rounded-lg">

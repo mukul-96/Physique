@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import { BACKEND_URL } from "../config";
 
-function FetchScanners() {
-    const [scanners, setScanners] = useState([]);
+interface Scanner {
+    id: number;
+    branchId: number;
+}
+
+function useFetchScanners() {
+    const [scanners, setScanners] = useState<Scanner[]>([]);
     const [loader, setLoader] = useState(true);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         async function fetchScanners() {
@@ -13,10 +18,10 @@ function FetchScanners() {
                 if (!response.ok) {
                     throw new Error('Failed to fetch scanners');
                 }
-                const data = await response.json();
+                const data: Scanner[] = await response.json();
                 setScanners(data);  
-            } catch (err: any) {
-                setError(err.message);
+            } catch (err) {
+                setError((err as Error).message);
             } finally {
                 setLoader(false);
             }
@@ -29,7 +34,7 @@ function FetchScanners() {
 }
 
 export default function QRscanners() {
-    const { scanners, loader, error } = FetchScanners();
+    const { scanners, loader, error } = useFetchScanners();
 
     if (loader) {
         return <div>Loading...</div>;
@@ -41,7 +46,7 @@ export default function QRscanners() {
 
     return (
         <div>
-            {scanners.map((scanner: any) => (
+            {scanners.map((scanner) => (
                 <button key={scanner.id}> 
                     {scanner.branchId} 
                 </button>

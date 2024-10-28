@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUsers, faCalendarCheck, faMoneyBillWave, faChartLine, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Avatar } from '../Avatar';
 
-type ManagerNavbarProps = {
+interface ManagerNavbarProps {
   managerName: string;
-  setButton: (section: 'Dashboard' | 'Members' | 'Plans' | 'Expense' | 'Analytics' | 'Logout') => void;
-};
+  setButton: (section: 'Dashboard' | 'Members' | 'Plans' | 'Expense' | 'Analytics' | 'Logout') => void; // Include 'Logout'
+}
 
 export default function ManagerNavbar({ managerName, setButton }: ManagerNavbarProps) {
   const [activeButton, setActiveButton] = useState<'Dashboard' | 'Members' | 'Plans' | 'Expense' | 'Analytics' | 'Logout'>('Dashboard');

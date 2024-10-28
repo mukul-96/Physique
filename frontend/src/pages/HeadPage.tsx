@@ -6,6 +6,7 @@ import { useState,useEffect } from 'react';
 export default function HeadPage() {
     const [hasFetched,setHasFetched]=useState<boolean>(false);
     const { branches=[], loading, error } = useFetchBranches();
+    const branchId=undefined;
     useEffect(() => {
         if (!loading && !hasFetched && branches.length > 0) {
           setHasFetched(true); 
@@ -14,7 +15,8 @@ export default function HeadPage() {
     return (
         <div className='head-page min-h-[100vh] w-full'>
             <div className='flex justify-center'>
-                 <Navbar />
+                
+                 <Navbar branchId={branchId} />
             </div>
             {error?<div>error</div>:""}
             <div className='flex flex-wrap gap-5 mt-10 p-10'>

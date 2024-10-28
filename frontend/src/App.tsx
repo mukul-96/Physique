@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
-import ManagerDashboard from './pages/ManagerPage';
+import ManagerDashboard from './pages/ManagerPage.tsx';
 import HeadPage from './pages/HeadPage';
 import BranchPage from './pages/BranchPage';
 import BranchAnalytics from './pages/BranchAnalytics';

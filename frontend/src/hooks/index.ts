@@ -253,7 +253,7 @@ export const useFetchPlans = (branchId: number | null): UseFetchPlanReturn => {
 export const useFetchMembers=(branchId:number |null ):UseFetchMembersDetailsReturns=>{
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const[members,setMembers]=useState<UseFetchMembersDetails[]>();
+  const [members, setMembers] = useState<UseFetchMembersDetails[]>([]);;
   useEffect(() => {
     const fetchMemberDetails = async () => {
       const url = `${BACKEND_URL}manager/memberslist/${branchId}`;

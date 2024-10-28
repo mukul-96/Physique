@@ -10,11 +10,10 @@ export default function BranchAnalytics() {
   const [month, setMonth] = useState<number>(currentDate.getMonth() + 1);
   const [year, setYear] = useState<number>(currentDate.getFullYear());
   const [salary, setSalary] = useState<number>(0);
-  const { branchId } = useParams<{ branchId: string }>();
+  const { branchId } = useParams<{ branchId: string | undefined }>();
   const [totalExpense, setTotalExpense] = useState<number>(0);
 
-  const safeId = branchId || '';
-
+  const safeId: string | null = branchId ?? null;
   const { branchDetails, loading, error } = useFetchBranchDetails(safeId);
 
   const trainers = useMemo(() =>
@@ -38,7 +37,7 @@ export default function BranchAnalytics() {
   return (
     <div>
 <div className="flex justify-center ">
-<Navbar branchId={branchId} />
+<Navbar branchId={safeId} />
 
   </div>      <div className="flex items-center justify-between p-10">
         <div className="space-y-2">
@@ -76,8 +75,8 @@ export default function BranchAnalytics() {
 
     
 
-      <Analytics branchId={branchId} month={month} year={year} totalExpense={totalExpense}  />
-      <HeadExpense branchId={branchId} month={month} year={year} salary={salary} onTotalExpense={handleTotalExpense} />
-    </div>
+      <Analytics branchId={safeId} month={month} year={year} totalExpense={totalExpense}  />
+      <HeadExpense branchId={branchId ? Number(branchId) : null} month={month} year={year} salary={salary} onTotalExpense={handleTotalExpense} />
+      </div>
   );
 }

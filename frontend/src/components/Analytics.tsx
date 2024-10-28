@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { BACKEND_URL } from "../config";
 import axios from "axios";
 import CurAndPrevYearSales from "./graphs/CurAndPrevYearSales";
-import DailySalesChart from "./graphs/DailySalesChart";
 import PieSubscriptionChart from "./graphs/PieSubscriptionChart";
 import BarsDataset from "./graphs/BarsDataset"; 
 
@@ -50,8 +49,8 @@ interface AnalyticsProps {
 }
 
 export default function Analytics({ branchId, month, year, totalExpense }: AnalyticsProps) {
-    const [users, setUsers] = useState<User[]>([]);
-    const [sameMonthPrevYear, setSameMonthPrevYear] = useState<User[]>([]);
+    // const [users, setUsers] = useState<User[]>([]);
+    // const [sameMonthPrevYear, setSameMonthPrevYear] = useState<User[]>([]);
     const [curYearUsers, setCurYearUsers] = useState<User[]>([]);
     const [prevYearUsers, setPrevYearUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -71,8 +70,8 @@ export default function Analytics({ branchId, month, year, totalExpense }: Analy
                 params: { month, year }
             });
             const data = response.data;
-            setUsers(data.users);
-            setSameMonthPrevYear(data.sameMonthPrevYear);
+            // setUsers(data.users);
+            // setSameMonthPrevYear(data.sameMonthPrevYear);
             setCurYearUsers(data.curYearUsers);
             setPrevYearUsers(data.prevYearUsers);
         } catch (error) {
@@ -103,7 +102,7 @@ export default function Analytics({ branchId, month, year, totalExpense }: Analy
 
     // Calculate gross profit or loss for the current and previous year
     const grossProfitCurrentYear = monthlyTurnoverCurrentYear - totalExpense;
-    const grossProfitPrevYear = monthlyTurnoverPrevYear - totalExpense;
+    // const grossProfitPrevYear = monthlyTurnoverPrevYear - totalExpense;
 
     const curYearDataset = generateMonthlyDataset(curYearUsers, year);
     const prevYearDataset = generateMonthlyDataset(prevYearUsers, year - 1);

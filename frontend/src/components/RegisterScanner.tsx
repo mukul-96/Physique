@@ -13,13 +13,11 @@ const RegisterScanner: React.FC = () => {
             });
             setToken(response.data.token);
             alert('Scanner registered successfully. Token: ' + response.data.token);
-        } catch (error: any) {
-            if (error.response) {
-                alert('Error: ' + error.response.data.message);
-            } else if (error.request) {
-                alert('Error: No response from server');
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                alert('Error: ' + (error.response?.data.message || 'Unexpected error'));
             } else {
-                alert('Error: ' + error.message);
+                alert('Error: ' + (error instanceof Error ? error.message : 'Unknown error'));
             }
         }
     };

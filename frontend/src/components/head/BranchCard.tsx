@@ -5,7 +5,6 @@ interface BranchDetails {
   name: string;
   address: string;
   managerId: number;
-  imageUrl: string; 
 }
 
 export default function BranchCard({ branch }: { branch: BranchDetails }) {

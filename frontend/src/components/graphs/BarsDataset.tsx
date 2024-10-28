@@ -1,6 +1,11 @@
 import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
 
+interface DatasetEntry {
+  month: number; 
+  [key: string]: number;
+}
+
 const chartSetting = {
   yAxis: [{ label: 'Subscription Count' }],
   width: 500,
@@ -13,12 +18,12 @@ const chartSetting = {
 };
 
 interface BarsDatasetProps {
-  dataset: { month: string; [key: string]: number }[];
+  dataset: DatasetEntry[]; 
   title: string;
 }
 
 export default function BarsDataset({ dataset, title }: BarsDatasetProps) {
-  const subscriptionColors = {
+  const subscriptionColors: Record<string, string> = {
     Gold: '#FFD700',
     Platinum: '#c0c0c0',
     Bronze: '#CD7F32',
@@ -35,8 +40,8 @@ export default function BarsDataset({ dataset, title }: BarsDatasetProps) {
         series={subscriptionTypes.map((type) => ({
           dataKey: type,
           label: type.charAt(0).toUpperCase() + type.slice(1),
-          valueFormatter: (value: number) => value.toString(),
-          color: subscriptionColors[type] || '#8884d8',
+          valueFormatter: (value: number | null) => (value !== null ? value.toString() : '0'), // Fallback to '0' if null
+          color: subscriptionColors[type as keyof typeof subscriptionColors] || '#8884d8',
         }))}
         {...chartSetting}
       />

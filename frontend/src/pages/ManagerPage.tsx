@@ -13,7 +13,7 @@ export default function ManagerPage() {
   const { id } = useParams();
   const { manager, loading: managerLoading, error: managerError } = useFetchManager(id || "");
   const [branchId, setBranchId] = useState<number | null>(null);
-  const [activeButton, setActiveButton] = useState<'Dashboard' | 'Members' | 'Plans' | 'Analytics' | 'Expense'>('Dashboard');
+  const [activeButton, setActiveButton] = useState<"Dashboard" | "Members" | "Plans" | "Expense" | "Analytics" | "Logout">("Dashboard");
   const [salary, setSalary] = useState<number>(0);
 
   useEffect(() => {
