@@ -11,9 +11,13 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+    origin:'https://physique-client.vercel.app/',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true 
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/manager", managerRouter);
 app.use("/api/v1/head", headRouter);
