@@ -37,6 +37,7 @@ export const Login = () => {
         navigate(`/user/${res.data.id}`);
       }
     } catch (error: unknown) {
+      console.log(error)
       if (isAxiosError(error)) {
         const responseError = error.response?.data || error.message;
 
