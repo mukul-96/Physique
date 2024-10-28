@@ -26,7 +26,7 @@ export const Login = () => {
     e.preventDefault();
     setLoading(true); 
     try {
-      const res = await axios.post<TokenAndIdResponse>(url, { email, password });
+      const res = await axios.get<TokenAndIdResponse>(url, { email, password });
       if (res.data.token) {
         localStorage.setItem("authorization", "Bearer " + res.data.token);
         if(role=="manager")
@@ -38,24 +38,6 @@ export const Login = () => {
       }
     } catch (error: unknown) {
       console.log(error)
-      if (isAxiosError(error)) {
-        const responseError = error.response?.data || error.message;
-
-        if (error.response?.status === 401) {
-          setError('Invalid email or password.');
-        } else if (responseError.includes('username')) {
-          setError('Username does not exist.');
-        } else if (responseError.includes('password')) {
-          setError('Incorrect password.');
-        } else {
-          setError('An error occurred. Please try again.');
-        }
-
-        console.error('Axios error:', responseError);
-      } else {
-        setError('An unexpected error occurred.');
-        console.error('Unknown error:', error);
-      }
     } finally {
       setLoading(false); 
     }
