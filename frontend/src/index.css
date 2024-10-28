@@ -1,0 +1,1714 @@
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.gradient-button {
+  background: linear-gradient(to right, #aab5ef, #98bcf7); 
+  color: white;
+  padding: 0.5rem 1.5rem; 
+  border-radius: 0.375rem; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  transition: background-color 0.3s;
+  font-weight: 600;
+  
+}
+
+.gradient-button:hover {
+  background: linear-gradient(to right, #93c5fd, #2563eb);
+}
+
+.gradient-button-filter {
+  background: linear-gradient(to right, #f1f5f9, #dee1e5);
+  color: slategray;
+  padding: 0.5rem 1.5rem; 
+  border-radius: 0.375rem; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  transition: background-color 0.3s;
+  font-weight: 600;
+}
+.hover-bg{
+  background: linear-gradient(to right, #aab5ef, #98bcf7); 
+}
+
+/* Ensure to import this CSS file in your project */
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
+}
+
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.trainers-container {
+  width: 150%;
+}
+/* From Uiverse.io by marcelodolza */ 
+.button {
+  --primary: #ff5569;
+  --neutral-1: #f7f8f7;
+  --neutral-2: #e7e7e7;
+  --radius: 14px;
+
+  cursor: pointer;
+  border-radius: var(--radius);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  border: none;
+  box-shadow: 0 0.5px 0.5px 1px rgba(255, 255, 255, 0.2),
+    0 10px 20px rgba(0, 0, 0, 0.2), 0 4px 5px 0px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+  min-width: 200px;
+  padding: 20px;
+  height: 68px;
+  font-family: "Galano Grotesque", Poppins, Montserrat, sans-serif;
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 600;
+}
+.button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+    0 15px 30px rgba(0, 0, 0, 0.3), 0 10px 3px -3px rgba(0, 0, 0, 0.04);
+}
+.button:active {
+  transform: scale(1);
+  box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+    0 10px 3px -3px rgba(0, 0, 0, 0.2);
+}
+.button:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  border: 2.5px solid transparent;
+  background: linear-gradient(var(--neutral-1), var(--neutral-2)) padding-box,
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.45))
+      border-box;
+  z-index: 0;
+  transition: all 0.4s ease;
+}
+.button:hover::after {
+  transform: scale(1.05, 1.1);
+  box-shadow: inset 0 -1px 3px 0 rgba(255, 255, 255, 1);
+}
+.button::before {
+  content: "";
+  inset: 7px 6px 6px 6px;
+  position: absolute;
+  background: linear-gradient(to top, var(--neutral-1), var(--neutral-2));
+  border-radius: 30px;
+  filter: blur(0.5px);
+  z-index: 2;
+}
+.state p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.state .icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  transform: scale(1.25);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.state .icon svg {
+  overflow: visible;
+}
+
+/* Outline */
+.outline {
+  position: absolute;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  inset: -2px -3.5px;
+}
+.outline::before {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  background: conic-gradient(
+    from 180deg,
+    transparent 60%,
+    white 80%,
+    transparent 100%
+  );
+  animation: spin 2s linear infinite;
+  animation-play-state: paused;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.button:hover .outline {
+  opacity: 1;
+}
+.button:hover .outline::before {
+  animation-play-state: running;
+}
+
+/* Letters */
+.state p span {
+  display: block;
+  opacity: 0;
+  animation: slideDown 0.8s ease forwards calc(var(--i) * 0.03s);
+}
+.button:hover p span {
+  opacity: 1;
+  animation: wave 0.5s ease forwards calc(var(--i) * 0.02s);
+}
+.button:focus p span {
+  opacity: 1;
+  animation: disapear 0.6s ease forwards calc(var(--i) * 0.03s);
+}
+@keyframes wave {
+  30% {
+    opacity: 1;
+    transform: translateY(4px) translateX(0) rotate(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-3px) translateX(0) rotate(0);
+    color: var(--primary);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0);
+  }
+}
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) translateX(5px) rotate(-90deg);
+    color: var(--primary);
+    filter: blur(5px);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(4px) translateX(0) rotate(0);
+    filter: blur(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-3px) translateX(0) rotate(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0);
+  }
+}
+@keyframes disapear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(5px) translateY(20px);
+    color: var(--primary);
+    filter: blur(5px);
+  }
+}
+
+/* Plane */
+.state--default .icon svg {
+  animation: land 0.6s ease forwards;
+}
+.button:hover .state--default .icon {
+  transform: rotate(45deg) scale(1.25);
+}
+.button:focus .state--default svg {
+  animation: takeOff 0.8s linear forwards;
+}
+.button:focus .state--default .icon {
+  transform: rotate(0) scale(1.25);
+}
+@keyframes takeOff {
+  0% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(70px) rotate(45deg) scale(2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(160px) rotate(45deg) scale(0);
+  }
+}
+@keyframes land {
+  0% {
+    transform: translateX(-60px) translateY(30px) rotate(-50deg) scale(2);
+    opacity: 0;
+    filter: blur(3px);
+  }
+  100% {
+    transform: translateX(0) translateY(0) rotate(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Contrail */
+.state--default .icon:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  width: 0;
+  left: -5px;
+  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.5));
+}
+.button:focus .state--default .icon:before {
+  animation: contrail 0.8s linear forwards;
+}
+@keyframes contrail {
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+  8% {
+    width: 15px;
+  }
+  60% {
+    opacity: 0.7;
+    width: 80px;
+  }
+  100% {
+    opacity: 0;
+    width: 160px;
+  }
+}
+
+/* States */
+.state {
+  padding-left: 29px;
+  z-index: 2;
+  display: flex;
+  position: relative;
+}
+.state--default span:nth-child(4) {
+  margin-right: 5px;
+}
+.state--sent {
+  display: none;
+}
+.state--sent svg {
+  transform: scale(1.25);
+  margin-right: 8px;
+}
+.button:focus .state--default {
+  position: absolute;
+}
+.button:focus .state--sent {
+  display: flex;
+}
+.button:focus .state--sent span {
+  opacity: 0;
+  animation: slideDown 0.8s ease forwards calc(var(--i) * 0.2s);
+}
+.button:focus .state--sent .icon svg {
+  opacity: 0;
+  animation: appear 1.2s ease forwards 0.8s;
+}
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: scale(4) rotate(-40deg);
+    color: var(--primary);
+    filter: blur(4px);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(0.6);
+    filter: blur(1px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* From Uiverse.io by andrew-demchenk0 */ 
+.card {
+  --main-color: #000;
+  --submain-color: #78858F;
+  --bg-color: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  position: relative;
+  width: 300px;
+  height: 384px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  background: var(--bg-color);
+}
+
+.card__img {
+  height: 192px;
+  width: 100%;
+}
+
+.card__img svg {
+  height: 100%;
+  border-radius: 20px 20px 0 0;
+}
+
+.card__avatar {
+  position: absolute;
+  width: 114px;
+  height: 114px;
+  background: var(--bg-color);
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: calc(50% - 57px);
+}
+
+.card__avatar svg {
+  width: 100px;
+  height: 100px;
+}
+
+.card__title {
+  margin-top: 60px;
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--main-color);
+}
+
+.card__subtitle {
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 15px;
+  color: var(--submain-color);
+}
+
+.card__btn {
+  margin-top: 15px;
+  width: 76px;
+  height: 31px;
+  border: 2px solid var(--main-color);
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--main-color);
+  background: var(--bg-color);
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.card__btn-solid {
+  background: var(--main-color);
+  color: var(--bg-color);
+}
+
+.card__btn:hover {
+  background: var(--main-color);
+  color: var(--bg-color);
+}
+
+.card__btn-solid:hover {
+  background: var(--bg-color);
+  color: var(--main-color);
+}
+.plans-background{
+  background-color: #e5e5f7;
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-radial-gradient(
+      circle at 0 0,
+      transparent 0,
+      #e5e5f7 30px
+    ),
+    repeating-linear-gradient(#ffb5b58a, #ffb8b8);
+}
+/* From Uiverse.io by AlimurtuzaCodes */ 
+.btn {
+  border: none;
+  width: 15em;
+  height: 5em;
+  border-radius: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #1C1A1C;
+  cursor: pointer;
+  transition: all 450ms ease-in-out;
+}
+
+.sparkle {
+  fill: #AAAAAA;
+  transition: all 800ms ease;
+}
+
+.text {
+  font-weight: 600;
+  color: #AAAAAA;
+  font-size: medium;
+}
+
+.btn:hover {
+  background: linear-gradient(0deg,#A47CF3,#683FEA);
+  box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
+  inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
+  0px 0px 0px 4px rgba(255, 255, 255, 0.2),
+  0px 0px 180px 0px #9917FF;
+  transform: translateY(-2px);
+}
+
+.btn:hover .text {
+  color: white;
+}
+
+.btn:hover .sparkle {
+  fill: white;
+  transform: scale(1.2);
+} 
+/* From Uiverse.io by alexruix */ 
+.loader {
+  width: 112px;
+  height: 112px;
+}
+
+.box1,
+.box2,
+.box3 {
+  border: 16px solid #3b3a3a;
+  box-sizing: border-box;
+  position: absolute;
+  display: block;
+}
+
+.box1 {
+  width: 112px;
+  height: 48px;
+  margin-top: 64px;
+  margin-left: 0px;
+  animation: abox1 4s 1s forwards ease-in-out infinite;
+}
+
+.box2 {
+  width: 48px;
+  height: 48px;
+  margin-top: 0px;
+  margin-left: 0px;
+  animation: abox2 4s 1s forwards ease-in-out infinite;
+}
+
+.box3 {
+  width: 48px;
+  height: 48px;
+  margin-top: 0px;
+  margin-left: 64px;
+  animation: abox3 4s 1s forwards ease-in-out infinite;
+}
+
+@keyframes abox1 {
+  0% {
+    width: 112px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 0px;
+  }
+
+  12.5% {
+    width: 48px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 0px;
+  }
+
+  25% {
+    width: 48px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 0px;
+  }
+
+  37.5% {
+    width: 48px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 0px;
+  }
+
+  50% {
+    width: 48px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 0px;
+  }
+
+  62.5% {
+    width: 48px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 0px;
+  }
+
+  75% {
+    width: 48px;
+    height: 112px;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+
+  87.5% {
+    width: 48px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+
+  100% {
+    width: 48px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+}
+
+@keyframes abox2 {
+  0% {
+    width: 48px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+
+  12.5% {
+    width: 48px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+
+  25% {
+    width: 48px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+
+  37.5% {
+    width: 48px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+
+  50% {
+    width: 112px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+
+  62.5% {
+    width: 48px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 64px;
+  }
+
+  75% {
+    width: 48px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 64px;
+  }
+
+  87.5% {
+    width: 48px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 64px;
+  }
+
+  100% {
+    width: 48px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 64px;
+  }
+}
+
+@keyframes abox3 {
+  0% {
+    width: 48px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 64px;
+  }
+
+  12.5% {
+    width: 48px;
+    height: 48px;
+    margin-top: 0px;
+    margin-left: 64px;
+  }
+
+  25% {
+    width: 48px;
+    height: 112px;
+    margin-top: 0px;
+    margin-left: 64px;
+  }
+
+  37.5% {
+    width: 48px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 64px;
+  }
+
+  50% {
+    width: 48px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 64px;
+  }
+
+  62.5% {
+    width: 48px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 64px;
+  }
+
+  75% {
+    width: 48px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 64px;
+  }
+
+  87.5% {
+    width: 48px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 64px;
+  }
+
+  100% {
+    width: 112px;
+    height: 48px;
+    margin-top: 64px;
+    margin-left: 0px;
+  }
+}
+.container-hero {
+  max-width: 1110px;
+  margin: 0 auto;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.page-padding {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.hero-section {
+  background-image: url("../src/images/hero/hero-img.jpg");
+  width: 100%;
+  height: 110vh;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center center;
+}
+.hero-text {
+  top: 55%;
+  right: 12px;
+  transform: translate(-50%, -50%);
+}
+
+.nav-btn-hover:hover {
+  transform: rotate(360deg);
+  transition: all 1s;
+}
+
+.title-white {
+  filter: brightness(0) invert(1);
+}
+
+.hero-cta::after {
+  content: "";
+  width: 200px;
+  height: 55px;
+  border: 1px solid rgba(255, 255, 255, 0.362);
+  position: absolute;
+  top: -12px;
+  left: 12px;
+  transition: all 0.4s;
+}
+
+.hero-cta:hover:after {
+  content: "";
+  width: 200px;
+  height: 55px;
+  border: 1px solid rgba(255, 255, 255);
+  position: absolute;
+  top: -0px;
+  left: 0px;
+  transition: all 0.4s;
+}
+
+.about-section {
+  background-image: url("../src/images/who-we-are/background.jpg");
+  object-fit: cover;
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+}
+
+.card-item-div {
+  transition: all 0.2s;
+}
+
+.card-item-div:hover {
+  background-image: url("../src/images/who-we-are/info-card-bg.jpg");
+  color: white;
+}
+
+.about-cta {
+  padding: 18px 36px;
+  transition: all 0.3s;
+  width: 210px;
+}
+
+.about-cta::after {
+  content: "";
+  width: 200px;
+  height: 55px;
+  border: 1px solid rgba(63, 63, 63, 0.362);
+  position: absolute;
+  top: -12px;
+  left: 12px;
+  transition: all 0.4s;
+}
+
+.about-cta:hover:after {
+  content: "";
+  width: 200px;
+  height: 55px;
+  border: 1px solid #ff0336;
+  position: absolute;
+  top: -0px;
+  left: 0px;
+  transition: all 0.4s;
+}
+
+.girl-running {
+  width: 100%;
+  height: auto;
+  top: 60%;
+  right: 46%;
+  transform: translate(50%, -50%);
+  position: absolute;
+  z-index: 5;
+}
+
+.girl-bg {
+  width: 51%;
+  height: auto;
+  top: 67.7%;
+  right: 33%;
+  transform: translate(50%, -50%);
+  position: absolute;
+}
+
+.girl-text {
+  width: 17%;
+  height: auto;
+  top: 67.7%;
+  right: 84%;
+  transform: translate(50%, -50%);
+  position: absolute;
+}
+
+.girl-wind {
+  width: 15%;
+  height: auto;
+  top: 64.7%;
+  right: 29%;
+  transform: translate(50%, -50%);
+  position: absolute;
+}
+
+/* grid  ------------------------------------- */
+
+/* after pseudo */
+.item-0-div::after,
+.item-1-div::after,
+.item-2-div::after,
+.item-3-div::after,
+.item-4-div::after,
+.item-5-div::after {
+  content: "";
+  height: 69px;
+  width: 140px;
+  background-color: rgba(255, 255, 255, 0.3);
+  position: absolute;
+  left: -49px;
+  bottom: 50%;
+  border-radius: 0 50px 50px 0;
+  transform: rotate(30deg);
+  transition: all 0.4s;
+  z-index: 5;
+}
+
+.item-0-div:hover:after,
+.item-1-div:hover:after,
+.item-2-div:hover:after,
+.item-3-div:hover:after,
+.item-4-div:hover:after,
+.item-5-div:hover:after {
+  background-color: rgb(255, 255, 255);
+}
+
+/* before pseudo */
+.item-0-div::before,
+.item-1-div::before,
+.item-2-div::before,
+.item-3-div::before,
+.item-4-div::before,
+.item-5-div::before {
+  width: 50%;
+  position: absolute;
+  transition: all 0.4s;
+  z-index: 6;
+  display: block;
+  transform: scale(0.65);
+}
+
+.item-0-div::before {
+  content: url("../src/images/features/gym-bike.png");
+  left: -25px;
+  bottom: 45%;
+}
+
+.item-1-div::before {
+  content: url("../src/images/features/karate.png");
+  left: -1px;
+  bottom: 45%;
+}
+
+.item-2-div::before {
+  content: url("../src/images/features/dumbbell.png");
+  left: -1px;
+  bottom: 45%;
+}
+
+.item-3-div::before {
+  content: url("../src/images/features/yoga.png");
+  left: -1px;
+  bottom: 45%;
+}
+
+.item-4-div::before {
+  content: url("../src/images/features/boxer.png");
+  left: -1px;
+  bottom: 45%;
+}
+
+.item-5-div::before {
+  content: url("../src/images/features/workout.png");
+  left: -25px;
+  bottom: 45%;
+}
+
+.item-0-div:hover:before,
+.item-1-div:hover:before,
+.item-2-div:hover:before,
+.item-3-div:hover:before,
+.item-4-div:hover:before,
+.item-5-div:hover:before {
+  transform: scale(0.66);
+}
+
+.item-0-div:hover:before {
+  content: url("../src/images/features/bike-red.png");
+}
+
+.item-1-div:hover:before {
+  content: url("../src/images/features/karate-red.png");
+}
+
+.item-2-div:hover:before {
+  content: url("../src/images/features/dumb-red.png");
+}
+
+.item-3-div:hover:before {
+  content: url("../src/images/features/yoga-red.png");
+}
+
+.item-4-div:hover:before {
+  content: url("../src/images/features/boxer-red.png");
+}
+
+.item-5-div:hover:before {
+  content: url("../src/images/features/workout-red.png");
+}
+
+/* grid items */
+.item-0,
+.item-1,
+.item-2,
+.item-3,
+.item-4,
+.item-5 {
+  filter: grayscale(100%);
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 2px 2px 8px 160px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.item-0:hover,
+.item-1:hover,
+.item-2:hover,
+.item-3:hover,
+.item-4:hover,
+.item-5:hover {
+  filter: grayscale(0%);
+  transform: scale(1.3);
+  box-shadow: inset 2px 2px 8px 160px rgba(0, 0, 0, 0);
+}
+
+.item-0-div {
+  height: 300px;
+  width: 100%;
+  grid-row-start: 1;
+  grid-column-start: 1;
+  grid-row-end: 2;
+  grid-column-end: 3;
+  overflow: hidden;
+}
+
+.item-1-div {
+  height: 300px;
+  width: 100%;
+  grid-row-start: 1;
+  grid-column-start: 3;
+  grid-row-end: 2;
+  grid-column-end: 4;
+  overflow: hidden;
+}
+
+.item-2-div {
+  height: 300px;
+  width: 100%;
+  grid-row-start: 1;
+  grid-column-start: 4;
+  grid-row-end: 2;
+  grid-column-end: 5;
+  overflow: hidden;
+}
+
+.item-3-div {
+  height: 300px;
+  width: 100%;
+  grid-row-start: 2;
+  grid-column-start: 1;
+  grid-row-end: 3;
+  grid-column-end: 2;
+  overflow: hidden;
+}
+
+.item-4-div {
+  height: 300px;
+  width: 100%;
+  grid-row-start: 2;
+  grid-column-start: 2;
+  grid-row-end: 3;
+  grid-column-end: 3;
+  overflow: hidden;
+}
+
+.item-5-div {
+  height: 300px;
+  width: 100%;
+  grid-row-start: 2;
+  grid-column-start: 3;
+  grid-row-end: 3;
+  grid-column-end: 5;
+  overflow: hidden;
+}
+
+.item-0 {
+  background-image: url("../src/images/features/cycling.jpg");
+  width: 100%;
+  height: 100%;
+}
+
+.item-1 {
+  background-image: url("../src/images/features/karate.jpg");
+  width: 100%;
+  height: 100%;
+}
+
+.item-2 {
+  background-image: url("../src/images/features/power.jpg");
+  width: 100%;
+  height: 100%;
+}
+
+.item-3 {
+  background-image: url("../src/images/features/meditation.jpg");
+  width: 100%;
+  height: 100%;
+}
+
+.item-4 {
+  background-image: url("../src/images/features/mma.jpg");
+  width: 100%;
+  height: 100%;
+}
+
+.item-5 {
+  background-image: url("../src/images/features/workout.jpg");
+  width: 100%;
+  height: 100%;
+}
+
+/* end of grid ^^ */
+
+.featured-cta {
+  background-image: url(../src/images/features/cta-bg.png);
+  width: 100%;
+  height: 210px;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* choose us */
+
+.choose-section {
+  background-image: url("../src/images/choose-us/choose-bg.jpg");
+  object-fit: cover;
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+}
+
+.video-div::before {
+  content: "";
+  height: 461px;
+  width: 10px;
+  background-color: #ff0336;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%) rotate(174deg);
+  transform: translateY(-50%) rotate(174deg);
+  right: 10px;
+}
+
+.video-div::after {
+  content: "";
+  height: 42%;
+  width: 10px;
+  background-color: #ff0336;
+  position: absolute;
+  bottom: 0;
+  left: -30px;
+}
+
+.choose-cta {
+  transition: all 0.4s;
+  margin-top: 40px;
+}
+
+.choose-cta::after {
+  border: 2px solid rgb(89, 89, 89, 0.5);
+}
+
+.choose-cta:hover:after {
+  border: 2px solid #ff0336;
+}
+
+/* trainers section */
+
+.trainers-section {
+  background-image: url("../src/images/trainers/dot-bg.png");
+  object-fit: cover;
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.trainers-section::after {
+  content: url("../src/images/trainers/bg-attachment.png");
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.box-desc::after {
+  content: "";
+  width: 45px;
+  height: 4px;
+  background-color: #ff0336;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  transition: all 0.4s ease-in-out;
+}
+
+.box-desc:hover:after {
+  content: "";
+  width: 100%;
+  height: 4px;
+}
+
+/* gallery grid */
+
+.gallery-grid {
+  display: grid;
+
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+
+  gap: 6px;
+  height: 100%;
+}
+
+#item-0 {
+  height: 410px;
+  width: 100%;
+  background-color: #de89dd;
+  grid-row-start: 1;
+  grid-column-start: 1;
+
+  grid-row-end: 3;
+  grid-column-end: 3;
+
+  background-image: url("../src/images/gallery/img1.jpg");
+  object-fit: cover;
+  background-size: cover;
+  /* background-position: 0 510px; */
+  background-repeat: no-repeat;
+}
+
+#item-1 {
+  background-color: #f7d9ab;
+  grid-row-start: 1;
+  grid-column-start: 3;
+
+  grid-row-end: 2;
+  grid-column-end: 5;
+
+  background-image: url("../src/images/gallery/img2.jpg");
+  object-fit: cover;
+  background-size: cover;
+  background-position: 0px -131px;
+  background-repeat: no-repeat;
+}
+
+#item-2 {
+  background-color: #bc775e;
+  grid-row-start: 2;
+  grid-column-start: 3;
+
+  grid-row-end: 4;
+  grid-column-end: 5;
+
+  background-image: url("../src/images/gallery/img5.jpg");
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#item-3 {
+  background-color: #a89ce7;
+  grid-row-start: 3;
+  grid-column-start: 1;
+
+  grid-row-end: 4;
+  grid-column-end: 2;
+
+  background-image: url("../src/images/gallery/img3.jpg");
+  object-fit: cover;
+  background-size: cover;
+  /* background-position: 0 -13px; */
+  background-repeat: no-repeat;
+}
+
+#item-4 {
+  background-color: #dc9f7c;
+  grid-row-start: 3;
+  grid-column-start: 2;
+
+  grid-row-end: 4;
+  grid-column-end: 3;
+
+  background-image: url("../src/images/gallery/img4.jpg");
+  object-fit: cover;
+  background-size: cover;
+  /* background-position: 0 -81px; */
+  background-repeat: no-repeat;
+}
+
+/* bmi section */
+
+.bmi-section {
+  background-image: url("../src/images/bmi/background.jpg");
+  object-fit: cover;
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+}
+
+/* price section */
+
+.pricing-section {
+  background-image: url("../src/images/pricing/background.jpg");
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.pricing-cta {
+  transition: all 0.4s;
+  margin-top: 40px;
+}
+
+.pricing-cta::after {
+  border: 2px solid #ff03353b;
+}
+
+.pricing-cta:hover:after {
+  border: 2px solid #ff0336;
+}
+
+/* blog section */
+.cta-section {
+  background-image: url("../src//images/call/background.jpg");
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* cta banner */
+
+.cta-banner-btn {
+  padding: 18px 22px;
+}
+
+/* gallery */
+
+.gallery-cta {
+  display: none;
+}
+
+/* login */
+.login-section {
+  background-image: url("../src/images/who-we-are/background.jpg");
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+
+.login-banner {
+  background-image: url("../src/images/login/banner.jpg");
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 45vh;
+}
+
+/* classes page ----- */
+
+.cycling-bg,
+.meditaion-bg,
+.mma-bg,
+.karate-bg,
+.power-bg,
+.workout-bg,
+.cross-bg,
+.run-bg {
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cycling-bg {
+  background-image: url("../src/images/classes/cycling.jpg");
+}
+
+.meditaion-bg {
+  background-image: url("../src/images/classes/meditation.jpg");
+}
+
+.mma-bg {
+  background-image: url("../src/images/classes/mma.jpg");
+}
+
+.karate-bg {
+  background-image: url("../src/images/classes/karate.jpg");
+}
+
+.powerlift-bg {
+  background-image: url("../src/images/classes/powerlifting.jpg");
+}
+
+.workout-bg {
+  background-image: url("../src/images/classes/workout.jpg");
+}
+
+.crossfit-bg {
+  background-image: url("../src/images/classes/cross.jpg");
+}
+
+.running-bg {
+  background-image: url("../src/images/classes/running.jpg");
+}
+
+.box-bg {
+  background-image: url("../src/images/classes/box.jpg");
+}
+
+.bodybuilding-bg {
+  background-image: url("../src/images/classes/bodybuilding.jpg");
+}
+
+.yoga-bg {
+  background-image: url("../src/images/classes/yoga.jpg");
+}
+
+.fitness-bg {
+  background-image: url("../src/images/classes/fitness.jpg");
+}
+
+/* blog page */
+
+.blog-cta {
+  padding: 18px 22px;
+  margin-left: 0;
+}
+
+.blog-banner {
+  background-image: url("../src/images/blogpage/sidebar1.png");
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.banner-shape {
+  -webkit-clip-path: polygon(0 0, 100% 0, 88% 100%, 0% 100%);
+  clip-path: polygon(0 0, 100% 0, 88% 100%, 0% 100%);
+}
+
+/* MEDIA QUERIES --------------------------------*/
+
+@media (max-width: 1200px) {
+  .navlist-nav {
+    display: none;
+  }
+
+  .fa-bars {
+    display: flex;
+  }
+}
+
+/* scrollbar ------------------------- */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #a0a0a0 #ffffff;
+  scroll-behavior: smooth;
+}
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 80px;
+  background-color: #ff0336;
+  border: 1.5px solid #fff;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a0;
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #a0a0a0;
+}
+
+/* *********************************** */
+
+/* From Uiverse.io by Yaya12085 */ 
+/* The switch - the box around the slider */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 2em;
+}
+
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #fff;
+  color: #000;
+  font-weight: 600;
+  border-radius: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "On";
+  height: 90%;
+  width: 48%;
+  left: 2%;
+  border-radius: 20px;
+  background-color: white;
+  color: green;
+  display: grid;
+  align-content: center;
+  justify-content: center;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 -1px 0 0 rgba(0, 0, 0, 0.1) inset, 0 -1.31em 1.31em -1.31em rgba(0, 0, 0, 0.3) inset, 0 0 1px 0 rgba(0, 0, 0, 0.1);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+  transition: .4s;
+}
+
+.slider:after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  right: -7px;
+  bottom: -7px;
+  border-radius: 1.71em;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.1));
+  z-index: -1;
+}
+
+.switch input:checked + .slider {
+  background-color: #21f3a3;
+  color: #111010;
+}
+
+.switch input:checked + .slider:before {
+  content: "Off";
+  transform: translateX(100%);
+  color: red;
+}
+
+.switch input {
+  display: none;
+}
+/* From Uiverse.io by vinodjangid07 */ 
+.Btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: .3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background-color: rgb(255, 65, 65);
+}
+
+/* plus sign */
+.sign {
+  width: 100%;
+  transition-duration: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign svg {
+  width: 17px;
+}
+
+.sign svg path {
+  fill: white;
+}
+/* text */
+.text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition-duration: .3s;
+}
+/* hover effect on button width */
+.Btn:hover {
+  width: 125px;
+  border-radius: 40px;
+  transition-duration: .3s;
+}
+
+.Btn:hover .sign {
+  width: 30%;
+  transition-duration: .3s;
+  padding-left: 20px;
+}
+/* hover effect button's text */
+.Btn:hover .text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: .3s;
+  padding-right: 10px;
+}
+/* button click effect*/
+.Btn:active {
+  transform: translate(2px ,2px);
+}
+.head-page {
+  background-image: url("../src//images//trainers/dot-bg.png");
+  object-fit: cover;
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+}
+/* From Uiverse.io by vinodjangid07 */
+#checkbox {
+  display: none;
+}
+
+.analytics-switch {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  background-color: rgb(99, 99, 99);
+  border-radius: 50%;
+  z-index: 1;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 0.9em;
+  font-weight: 700;
+  color: rgb(37, 37, 37);
+  border: 2px solid rgb(126, 126, 126);
+  box-shadow: 0px 0px 3px rgb(2, 2, 2) inset;
+}
+
+.svg {
+  position: relative;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svg path {
+  fill: rgb(37, 37, 37);
+}
+
+#checkbox:checked + .analytics-switch .svg {
+  filter: drop-shadow(0px 0px 3px rgb(222, 151, 255));
+}
+
+#checkbox:checked + .analytics-switch .svg path {
+  fill: rgb(255, 255, 255);
+}
+
+#checkbox:checked + .analytics-switch {
+  box-shadow: 0px 0px 1px rgb(222, 151, 255) inset,
+      0px 0px 2px rgb(222, 151, 255) inset,
+      0px 0px 10px rgb(222, 151, 255) inset,
+      0px 0px 40px rgb(222, 151, 255),
+      0px 0px 100px rgb(222, 151, 255),
+      0px 0px 5px rgb(222, 151, 255);
+  border: 2px solid rgb(255, 255, 255);
+  background-color: rgb(152, 107, 172);
+  color: rgb(255, 255, 255);
+}

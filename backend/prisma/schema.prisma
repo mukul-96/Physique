@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+model User {
+  id           Int         @id @default(autoincrement())
+  email        String      @unique
+  name         String
+  password     String
+  balance      Int         @default(0)
+  dailyFee      Int         @default(0)
+  isActive     Boolean     @default(false)
+  checkedIn   DateTime?
+  memberships  History[]
+  enrolledIn   Enrollment[]
+}
+
+model History {
+  id           Int         @id @default(autoincrement())
+  userId       Int
+  subscription String
+  branchId     Int
+  price         Int   @default(1000)
+  date         DateTime
+  user         User        @relation(fields: [userId], references: [id])
+}
+
+model Branches {
+  id          Int          @id @default(autoincrement())
+  name        String
+  address     String
+  dailyFee     Int  @default(59)
+  manager  Managers?     @relation(fields: [managerId], references: [id])
+  managerId   Int?         @unique  
+  staff       Rooster[]    @relation("BranchStaff")
+  reviews     Feedback[]   @relation("BranchFeedbacks")
+  plans       Subscription[]
+  expenditure Utilities[]@relation("BranchUtilities")
+  scanner AuthorizedScanners[]
+}
+model Members{
+  id          Int          @id @default(autoincrement())
+  userId Int
+  brachId Int
+  dateOfPurchase DateTime
+
+}
+model Utilities {
+  id               Int            @id @default(autoincrement())
+  title            String
+  cost             Int  
+  year             Int
+  month            Int
+  branchId         Int
+  branch           Branches       @relation("BranchUtilities", fields: [branchId], references: [id])
+}
+
+  model Subscription {
+    id          Int         @id @default(autoincrement())
+    name        String
+    description String
+    price       Int
+    branchId    Int
+    days Int
+    active Boolean @default(false)
+    branch      Branches    @relation(fields: [branchId], references: [id])
+    enrolled    Enrollment[]
+    planId      Int
+    plan        Plans        @relation(fields: [planId], references: [id])
+
+  }
+
+model Enrollment {
+  id           Int         @id @default(autoincrement())
+  userId       Int
+  subscriptionId Int
+  user         User        @relation(fields: [userId], references: [id])
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+}
+
+model Rooster {
+  id          Int         @id @default(autoincrement())
+  branchId    Int
+  name        String
+  email       String      @unique @default("default@example.com")
+  designation String
+  salary      Int
+  description String
+  branch      Branches    @relation("BranchStaff", fields: [branchId], references: [id])
+}
+
+model Feedback {
+  id        Int         @id @default(autoincrement())
+  branchId  Int
+  content   String
+  rating    Int
+  branch    Branches   @relation("BranchFeedbacks", fields: [branchId], references: [id])
+}
+
+model Managers {
+  id       Int    @id @default(autoincrement())
+  branchId Int
+  email    String @unique
+  name     String
+  password String
+  branch Branches?
+}
+model Head{
+ id       Int    @id @default(autoincrement())
+  email    String @unique
+  name     String
+  password String
+}
+model Plans{
+  id       Int    @id @default(autoincrement())
+  description String
+  name String
+  days Int
+  subscriptions Subscription[]
+
+}
+model AuthorizedScanners {
+  id            Int      @id @default(autoincrement())
+  scannerName   String   @map("scanner_name")
+  branchId Int
+  branch Branches @relation(fields: [branchId],references: [id])
+}
+
