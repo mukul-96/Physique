@@ -13,6 +13,7 @@ const scanner_1 = __importDefault(require("./routes/scanner"));
 const cronRouter_1 = __importDefault(require("./routes/cronRouter"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
+app.use(express_1.default.json());
 const corsOptions = {
     origin: ['https://physique-client.vercel.app', `http://localhost:5173`],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
