@@ -10,6 +10,7 @@ import cronRouter from "./routes/cronRouter";
 dotenv.config();
 
 const app = express();
+app.use(express.json());
 
 const corsOptions = {
     origin:['https://physique-client.vercel.app' , `http://localhost:5173`],
