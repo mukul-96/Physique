@@ -1,4 +1,4 @@
-import axios, { isAxiosError } from "axios";
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { BACKEND_URL } from '../config';
@@ -36,8 +36,10 @@ export const Login = () => {
         else
         navigate(`/user/${res.data.id}`);
       }
-    } catch (error: unknown) {
+    } catch (error) {
       console.log(error)
+      //@ts-ignore
+      setError(error)
     } finally {
       setLoading(false); 
     }
