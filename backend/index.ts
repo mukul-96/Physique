@@ -13,14 +13,7 @@ const app = express();
 
 app.use(cors());
 
-app.use(express.json());
-const allowedOrigins = ['*'];
-
-const options: cors.CorsOptions = {
-    origin: allowedOrigins
-};
-
-app.use(cors(options));
+app.use(cors());
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/manager", managerRouter);
 app.use("/api/v1/head", headRouter);
