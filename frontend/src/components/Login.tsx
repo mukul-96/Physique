@@ -26,7 +26,7 @@ export const Login = () => {
     e.preventDefault();
     setLoading(true); 
     try {
-      const res = await axios.get<TokenAndIdResponse>(url, { email, password });
+      const res = await axios.post<TokenAndIdResponse>(url, { email, password });
       if (res.data.token) {
         localStorage.setItem("authorization", "Bearer " + res.data.token);
         if(role=="manager")
