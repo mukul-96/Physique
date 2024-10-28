@@ -141,7 +141,7 @@ export const Login = () => {
           </button>
           <p className="text-sm font-light text-purple-800">
             Don’t have an account yet?{" "}
-            <Link to="/user" className="font-medium text-primary-600 hover:underline">
+            <Link to="/signup" className="font-medium text-primary-600 hover:underline">
               Sign up
             </Link>
           </p>

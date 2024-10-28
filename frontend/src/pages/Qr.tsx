@@ -44,7 +44,7 @@ export default function Qr() {
 
     return (
         <div>
-            {scanners.map((scanner: any) => (
+            {scanners.map((scanner:any) => (
                 <button 
                     key={scanner.id} 
                     onClick={() => navigate(`/QrReader/${scanner.branchId}`)} 
