@@ -1,3 +1,4 @@
+import ManagerPlansSkeleton from "../../skeletons/ManagerPlansSkeleton";
 import { useFetchPlans } from "../../hooks";
 import PlanCard from "./PlanCard";
 
@@ -10,10 +11,11 @@ export default function Plans({ branchId }: PlanDetailsProps) {
   const { plans, loading, error } = useFetchPlans(branchId);
 
   if (loading) {
-    return <div>Loading plans...</div>;
-  }
+    return(
+    <ManagerPlansSkeleton></ManagerPlansSkeleton>)
+}
 
-  if (error) {
+  else if (error) {
     return <div>Error loading plans: {error}</div>;
   }
 

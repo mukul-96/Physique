@@ -5,7 +5,7 @@ function Hero() {
     <>
       <section
         id="home"
-        className="hero-section w-full h-screen min800:flex min800:justify-center min800:text-center"
+        className="hero-section w-full  h-screen min800:flex min800:justify-center min800:text-center"
       >
         <div className="container-hero">
           {/* hero section */}

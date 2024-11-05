@@ -28,9 +28,9 @@ const amenities = [
   'Parking',
   'Advanced Air Filtration',
   'CrossFit Area'
-] as const; 
+] as const;
 
-type Amenity = typeof amenities[number]; 
+type Amenity = typeof amenities[number];
 
 const amenitiesIcons: Record<Amenity, string> = {
   'Cardio Machines': cycle2,
@@ -50,19 +50,18 @@ const amenitiesIcons: Record<Amenity, string> = {
   'CrossFit Area': bag
 };
 
-
 export default function FeaturesCard() {
   return (
-    <div className="p-8 bg-white rounded-2xl  max-w-6xl mx-auto">
-      <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
+    <div className="p-6 md:p-8 bg-white rounded-2xl max-w-6xl mx-auto">
+      <h2 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-6 md:mb-8">
         What This Place Offers
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
         {amenities.map((amenity, index) => (
           <div
             key={index}
-            className="flex items-center space-x-4 p-4  rounded-lg shadow-sm 
-             hover:scale-125 transform transition duration-200 ease-in-out"
+            className="flex items-center space-x-4 p-4 rounded-lg shadow-sm 
+             hover:scale-105 transform transition duration-200 ease-in-out"
           >
             {amenitiesIcons[amenity] && (
               <img
@@ -71,7 +70,7 @@ export default function FeaturesCard() {
                 className="w-10 h-10 opacity-90 hover:opacity-100 transition-opacity duration-300"
               />
             )}
-            <span className="text-lg font-medium text-gray-700">
+            <span className="text-sm md:text-lg font-medium text-gray-700 whitespace-normal">
               {amenity}
             </span>
           </div>

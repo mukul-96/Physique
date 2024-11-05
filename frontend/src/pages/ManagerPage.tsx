@@ -33,7 +33,7 @@ export default function ManagerPage() {
       case 'Members':
         return <div><Members branchId={branchId} /></div>;  
       case 'Plans':
-        return <div className="h-full w-full bg-pink-100"><Plans branchId={branchId}/></div>;
+        return <div className="h-full w-full "><Plans branchId={branchId}/></div>;
       case 'Analytics':        
         return <div>Analytics</div>;
         case 'Expense':

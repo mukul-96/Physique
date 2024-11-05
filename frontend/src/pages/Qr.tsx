@@ -2,7 +2,13 @@ import { useState, useEffect } from "react";
 import { BACKEND_URL } from "../config";
 import { useNavigate } from "react-router-dom";
 
-// Define your fetch hook
+
+interface Scanner{
+    scannerName:string;
+    id:number;
+    branchId:number;
+
+}
 function FetchScanners() {
     const [scanners, setScanners] = useState([]);
     const [loader, setLoader] = useState(true);
@@ -17,8 +23,9 @@ function FetchScanners() {
                 }
                 const data = await response.json();
                 setScanners(data);  
-            } catch (err: any) {
-                setError(err.message);
+            } catch (err:unknown) {
+                //@ts-ignore
+                setError(err);
             } finally {
                 setLoader(false);
             }
@@ -43,15 +50,19 @@ export default function Qr() {
     }
 
     return (
-        <div>
-            {scanners.map((scanner:any) => (
-                <button 
-                    key={scanner.id} 
-                    onClick={() => navigate(`/QrReader/${scanner.branchId}`)} 
-                >
-                    {scanner.branchId}  
-                </button>
-            ))}
-        </div>
+        <div className="w-full h-screen flex justify-center items-center">
+            
+    {scanners.map((scanner: Scanner) => (
+        <button 
+            key={scanner.id} 
+            onClick={() => navigate(`/QrReader/${scanner.branchId}`)} 
+            className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 transition duration-200 m-10 h-20 w-20"
+        >
+            ID<br/>
+            {scanner.branchId}  
+        </button>
+    ))}
+</div>
+
     );
 }

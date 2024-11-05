@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useFetchMembers } from "../../hooks";
 import MemberCard from "./MemberCard";
+import StaffListSkeleton from "../../skeletons/StaffListSkeleton";
 
 interface Props {
   branchId: number | null;
@@ -36,18 +37,11 @@ export default function Members({ branchId }: Props) {
   useEffect(() => {
   }, [branchId]);
 
-  if (loading) {
-    return <div>Loading members...</div>;
-  }
+  
 
   if (error) {
     return <div>Error loading members: {error}</div>;
   }
-
-  if (!members || members.length === 0) {
-    return <div>No members enrolled</div>;
-  }
-
   return (
     <div className="p-4">
        <div className="drop-shadow-md text-md h-14 w-full flex flex-row items-center justify-around font-semibold text-slate-500 bg-white">
@@ -56,6 +50,7 @@ export default function Members({ branchId }: Props) {
         <div className="flex w-full justify-center border-r-4 border-slate-200 items-center h-full">Email Address</div>
         <div className="w-full border-r-3 gap-2 border-slate-200 flex justify-center items-center h-full">Membership</div>
       </div>
+      {loading?<StaffListSkeleton/>:
       <div className=" gap-4">
         {members.map((member: UseFetchMembersDetails) =>
           member.enrolled.length > 0 && (
@@ -73,7 +68,7 @@ export default function Members({ branchId }: Props) {
             ))
           ) 
         )}
-      </div>
+      </div>}
     </div>
   );
 }

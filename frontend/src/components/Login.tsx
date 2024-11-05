@@ -29,9 +29,9 @@ export const Login = () => {
       const res = await axios.post<TokenAndIdResponse>(url, { email, password });
       if (res.data.token) {
         localStorage.setItem("authorization", "Bearer " + res.data.token);
-        if(role=="manager")
+        if(role==="manager")
           navigate(`/manager/${res.data.id}`);
-        if(role=="Head")
+        else if(role==="Head")
           navigate(`/head`);
         else
         navigate(`/user/${res.data.id}`);

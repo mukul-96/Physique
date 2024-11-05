@@ -48,6 +48,11 @@ function NavList() {
             Contact
           </Link>
         </li>
+        <li style={{ transition: "all 0.3s" }} className=" cursor-pointer hover:text-[#ff0336]">
+          <Link onClick={goTop} to={"/contact"}>
+            Profile
+          </Link>
+        </li>
       </ul>
     </>
   );

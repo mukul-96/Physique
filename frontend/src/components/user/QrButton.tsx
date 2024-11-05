@@ -26,17 +26,14 @@ export default function QrButton() {
   };
 
   return (
-    <div className="">
+    <div className="bg-red-600 hover:bg-red-400 ">
       <button
-        className="relative flex items-center justify-center"
+        className="relative flex items-center justify-center font-medium max-w-36 max-h-16"
         onClick={generateQrCode}
       >
         <div className="loader">
-          <div className="box1"></div>
-          <div className="box2"></div>
-          <div className="box3"></div>
         </div>
-        <span className="absolute text-white">Generate QR</span>
+        <span className="absolute  ">Generate QR</span>
       </button>
 
       {/* Modal to display the generated QR code */}

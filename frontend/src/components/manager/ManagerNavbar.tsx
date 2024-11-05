@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUsers, faCalendarCheck, faMoneyBillWave, faChartLine, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Avatar } from '../Avatar';
@@ -10,12 +11,16 @@ interface ManagerNavbarProps {
 
 export default function ManagerNavbar({ managerName, setButton }: ManagerNavbarProps) {
   const [activeButton, setActiveButton] = useState<'Dashboard' | 'Members' | 'Plans' | 'Expense' | 'Analytics' | 'Logout'>('Dashboard');
-
+const navigate=useNavigate();
   const handleButtonClick = (section: 'Dashboard' | 'Members' | 'Plans' | 'Expense' | 'Analytics' | 'Logout') => {
     setActiveButton(section);
     setButton(section);
   };
-
+const logoutHandler=()=>{
+  localStorage.removeItem("token");
+  localStorage.removeItem("authorization");
+  navigate('/');
+}
   return (
     <div className="flex flex-col h-screen items-center p-4 bg-white w-64">
       {/* Logo */}
@@ -66,7 +71,7 @@ export default function ManagerNavbar({ managerName, setButton }: ManagerNavbarP
       <div className="mt-auto flex flex-col items-center w-full">
         <Avatar name={managerName || ""} />
         <button
-          onClick={() => handleButtonClick('Logout')}
+          onClick={logoutHandler}
           className="gradient-button"
         >
           <FontAwesomeIcon icon={faSignOutAlt} className="mr-2 text-white" />

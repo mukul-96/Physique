@@ -9,7 +9,7 @@ function Footer() {
           <div className="flex justify-between min620:flex-col min620:items-center min620:text-center min620:gap-[50px] !text-left">
             {/* logo side */}
             <div className="flex flex-col w-1/3 gap-8">
-              <img src={FooterLogo} alt="footer_logo" className="w-[180px]" />
+              <img src={FooterLogo} alt="footer_logo" className="" />
               <p className="text-[15px] font-medium text-[#646464]">
                 Take your health and body to the next level with our comprehensive program designed to help
                 you reach your fitness goals.
@@ -34,7 +34,7 @@ function Footer() {
                 ></i>
               </div>
               <p className="text-[16px] font-medium text-[#646464]">
-                Privacy Policy | © {new Date().getFullYear()} Gymate <br /> Design by{" "}
+                Privacy Policy | © {new Date().getFullYear()} Physique <br /> Design by{" "}
                 <a target="_blank" rel="noreferrer" href="https://www.radiustheme.com/">
                   RadiusTheme
                 </a>

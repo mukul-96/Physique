@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import "./QrStyles.css";
 import { BACKEND_URL } from "../config";
 import QrScanner from "qr-scanner";
 import QrFrame from "../utilities/images/qr-frame.svg";
