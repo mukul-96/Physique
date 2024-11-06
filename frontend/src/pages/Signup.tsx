@@ -9,7 +9,7 @@ export const Signup = () => {
           <div className="flex flex-col text-white font-bold p-10 mr-8">
             <p className="text-5xl px-3 py-3">Thanks</p>
             <p className="text-5xl p-3">For choosing</p>
-            <p className="text-5xl p-3">Fitmusk...</p>
+            <p className="text-5xl p-3">Physique...</p>
           </div>
         </div>
           <SignupDetails/>

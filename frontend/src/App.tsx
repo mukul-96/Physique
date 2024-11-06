@@ -15,7 +15,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Signin />} />
+        <Route path='/signin' element={<Signin />} />
+        <Route path='/' element={<Home />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/manager/:id' element={<ManagerDashboard />} />
         {/* <Route path='/:role/branches' element={<AllBranches/>}></Route> */}

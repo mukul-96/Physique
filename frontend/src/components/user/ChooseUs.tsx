@@ -81,7 +81,7 @@ function ChooseUs() {
                 arrowColor={`!text-white`}
                 cN="choose-cta"
                 hover={`hover:bg-[#ff0336]`}
-                goTo="/"
+                goTo="/signin"
               />
             </div>
           </div>

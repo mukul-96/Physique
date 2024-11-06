@@ -19,7 +19,7 @@ export default {
 	  },
   		backgroundImage: {
   			'login-image': 'url(/src/utilities/images/loginImg.jpg)',
-  			athlete2: 'url(/src/utilities/images/athelete.png)',
+  			athlete2: 'url(/src/utilities/images/athlete.png)',
   			athlete1: 'url(/src/utilities/images/athlete2.png)',
   			mangercard: 'url(/src/utilities/images/managerCard.jpg)',
   		},

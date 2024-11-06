@@ -41,7 +41,7 @@ export const Login = () => {
 
   return (
     <div className="bg-white rounded-r-2xl flex items-center justify-center">
-      <div className="w-full max-w-md p-6">
+      <div className="w-full max-w-md p-6 z-50">
         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
           Sign in to your account
         </h1>
@@ -50,10 +50,11 @@ export const Login = () => {
             Select Your Role:
           </label>
           <select
+
             id="role"
             value={role}
             onChange={(e) => setRole(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+            className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
           >
             <option value="user">Member</option>
             <option value="manager">Manager</option>
@@ -117,7 +118,7 @@ export const Login = () => {
           >
             {loading ? <Spinner /> : 'Sign in'}
           </button>
-          <p className="text-sm font-light text-purple-800">
+          <p className="text-sm font-light text-purple-800 flex justify-center">
             Don’t have an account yet?{" "}
             <Link to="/signup" className="font-medium text-primary-600 hover:underline">
               Sign up

@@ -1508,6 +1508,11 @@
   }
 }
 @media (max-width: 1199px) {
+  .navbar-logo {
+    display: none; 
+  }
+}
+@media (max-width: 1199px) {
   .user-navbar {
     size: 40px;
     padding: 10px;      
