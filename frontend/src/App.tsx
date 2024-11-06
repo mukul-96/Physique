@@ -26,8 +26,7 @@ function App() {
         <Route path='/:role/:id' element={<Home/>}></Route>
         {/* <Route path='/profile' element={<ProfilePage/>}></Route> */}
         <Route path='/qr' element={<Qr/>}></Route>
-        <Route path='qrreader/:id' element={<QrReader/>}></Route>
-
+        <Route path='/qrreader/:id' element={<QrReader/>}></Route>
         
       </Routes>
     </BrowserRouter>
