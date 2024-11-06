@@ -8,11 +8,18 @@ import { useParams } from "react-router-dom";
 
 import Images from "../components/Images";
 import { Testimonial } from "../components/Testimonial";
-import Navbar from "../components/head/Navbar";
+import Navbar1 from "../components/head/Navbar";
+import Navbar from "../components/user/Navbar"
 
 export default function BranchPage() {
-  const { id } = useParams<{ id: string }>();
-  const safeId = id || null;
+  const { branchId } = useParams<{ branchId: string }>();
+  const safeId = branchId || null;
+  console.log(safeId)
+  const {role}=useParams();
+  const safeRole = role || null;
+  console.log(safeRole)
+
+
 
   const { branchDetails, loading, error } = useFetchBranchDetails(safeId);
 
@@ -25,14 +32,13 @@ export default function BranchPage() {
   const trainers = branchDetails.staff.filter(
     (staff) => staff.designation === "Trainer"
   );
-
   return (
     <div className="min-h-screen overflow-hidden p-4 sm:p-6 lg:p-8">
-      <div className="flex justify-center">
-        <Navbar branchId={id} />
-      </div>
+     
+    <div className="flex justify-center"> {role==="user"?<div className="mb-20"><Navbar/></div>:<Navbar1 branchId={branchId} />
+     } </div>
 
-      <div className="w-full px-4 sm:px-6 lg:px-10">
+      <div className="w-full px-4 sm:px-6 lg:px-10 ">
         <Images />
       </div>
 

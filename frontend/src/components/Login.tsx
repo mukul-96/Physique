@@ -1,25 +1,23 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { BACKEND_URL } from '../config';
-import Spinner from './Spinner'; 
-
+import Spinner from './Spinner';
 
 interface TokenAndIdResponse {
   token: string;
   id: number;
 }
 
-
 export const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [role, setRole] = useState<string>("user");
-  const [error, setError] = useState<null | string>(""); 
   const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
-
   const url = `${BACKEND_URL}${role}/signin`;
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -29,17 +27,13 @@ export const Login = () => {
       const res = await axios.post<TokenAndIdResponse>(url, { email, password });
       if (res.data.token) {
         localStorage.setItem("authorization", "Bearer " + res.data.token);
-        if(role==="manager")
-          navigate(`/manager/${res.data.id}`);
-        else if(role==="Head")
-          navigate(`/head`);
-        else
-        navigate(`/user/${res.data.id}`);
+        if (role === "manager") navigate(`/manager/${res.data.id}`);
+        else if (role === "Head") navigate(`/head/1/branches`);
+        else navigate(`/user/${res.data.id}`);
       }
     } catch (error) {
-      console.log(error)
-      //@ts-ignore
-      setError(error)
+      toast.error("Login failed. Please check your credentials.");
+      console.error(error);
     } finally {
       setLoading(false); 
     }
@@ -96,7 +90,6 @@ export const Login = () => {
               required
             />
           </div>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
           <div className="flex items-center justify-between">
             <div className="flex items-start">
               <div className="flex items-center h-5">
@@ -131,6 +124,7 @@ export const Login = () => {
             </Link>
           </p>
         </form>
+        <ToastContainer />
       </div>
     </div>
   );

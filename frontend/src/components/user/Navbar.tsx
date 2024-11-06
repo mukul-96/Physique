@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import Logo from "../../images/logo/logo.svg";
-import NavList from "./NavList";
 import { Link } from "react-router-dom";
 import QrButton from "./QrButton"; // Import the QRScanner component
+import NavList from "./NavList";
 
 function Navbar() {
   const [spin, setSpin] = useState(false);
@@ -48,7 +48,7 @@ function Navbar() {
   return (
     <>
       <nav
-        className={`user-navbar max-h-24 flex flex-row bg-transparent items-center justify-between py-8 px-12  fixed top-0 left-0 right-0 w-full z-50 ${
+        className={`user-navbar max-h-24 flex flex-row bg-black items-center justify-between py-8 px-12  fixed top-0 left-0 right-0 w-full z-50 ${
           sticky ? "shadow-xl !bg-black" : ""
         }`}
       >

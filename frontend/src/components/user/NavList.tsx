@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 function NavList() {
   const goTop = () => {
     window.scrollTo({
@@ -7,11 +7,16 @@ function NavList() {
       behavior: "auto",
     });
   };
+  const {id}=useParams();
+  const {role}=useParams();
+
   return (
     <>
       <ul className="flex gap-9 text-white text-[16px] font-medium xl:none">
         <li style={{ transition: "all 0.3s" }} className=" cursor-pointer hover:text-[#ff0336]">
-          <a href="/">Home</a>
+        <Link onClick={goTop} to={`/${role}/${id}`}>
+            Home
+          </Link>
         </li>
         <li style={{ transition: "all 0.3s" }} className=" cursor-pointer hover:text-[#ff0336]">
           <Link onClick={goTop} to={"/about"}>
@@ -49,7 +54,12 @@ function NavList() {
           </Link>
         </li>
         <li style={{ transition: "all 0.3s" }} className=" cursor-pointer hover:text-[#ff0336]">
-          <Link onClick={goTop} to={"/contact"}>
+          <Link onClick={goTop} to={`/${role}/${id}/branches`}>
+            Branches
+          </Link>
+        </li>
+        <li style={{ transition: "all 0.3s" }} className=" cursor-pointer hover:text-[#ff0336]">
+          <Link onClick={goTop} to={"/profile"}>
             Profile
           </Link>
         </li>

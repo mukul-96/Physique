@@ -14,7 +14,7 @@ export default function BranchCard({ branch }: { branch: BranchDetails }) {
     <button
       className="flex flex-col border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 m-2 overflow-hidden"
       onClick={() => {
-        navigate(`/head/branch/${branch.id}`);
+        navigate(`branch/${branch.id}`);
       }}
     >
       <div className="h-48 w-96 bg-gray-300 relative">

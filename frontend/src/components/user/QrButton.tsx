@@ -2,22 +2,21 @@ import { useState } from 'react';
 import QRCode from 'qrcode';
 import Modal from 'react-modal';
 import { useParams } from 'react-router-dom';
+import { FaQrcode } from 'react-icons/fa';
 
 export default function QrButton() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState('');
 
-  // Sample user and branch ID
-  const userId=useParams(); // replace with actual user id
+  const userId=useParams(); 
 
   // Function to generate the QR code
   const generateQrCode = async () => {
     try {
-      // Convert the object to a JSON string for QR code generation
       const jsonString = JSON.stringify(userId);
       console.log("first")
       console.log(jsonString);
-      const url = await QRCode.toDataURL(jsonString); // Generate QR code from the JSON string
+      const url = await QRCode.toDataURL(jsonString);
       setQrCodeUrl(url);
       setModalIsOpen(true);
     } catch (err) {
@@ -26,17 +25,25 @@ export default function QrButton() {
   };
 
   return (
-    <div className="bg-red-600 hover:bg-red-400 ">
+    <div className="bg-white hover:bg-slate-100 rounded-full ">
       <button
         className="relative flex items-center justify-center font-medium max-w-36 max-h-16"
         onClick={generateQrCode}
       >
         <div className="loader">
         </div>
-        <span className="absolute  ">Generate QR</span>
+
+<div className=" group absolute">
+      <span className="text-5xl">
+        <FaQrcode />
+      </span>
+      <div className="absolute left-1/2 -translate-x-1/2 mt-2 hidden group-hover:block bg-gray-800 text-white text-sm py-1 px-2 rounded shadow-lg">
+       Generate QR Code
+      </div>
+    </div>       
+        
       </button>
 
-      {/* Modal to display the generated QR code */}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
@@ -46,7 +53,6 @@ export default function QrButton() {
       >
         <div className="text-center">
           <h2 className="text-lg font-bold mb-4">Your QR Code</h2>
-          {/* Display the generated QR code */}
           <img src={qrCodeUrl} alt="QR Code" className="mb-4" />
           <button
             className="px-4 py-2 bg-red-500 text-white rounded"

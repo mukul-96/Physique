@@ -4,6 +4,8 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import QrScanner from "qr-scanner";
 import QrFrame from "../utilities/images/qr-frame.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const QrReader = () => {
   const branchId = useParams().id;
@@ -22,7 +24,12 @@ const QrReader = () => {
     try {
       const url = `${BACKEND_URL}scanner/scan/${branchId}`;
       await axios.put(url, { qrData: scannedData });
+      toast.success("Check-in successful, daily fee deducted");
     } catch (error) {
+      const errorMessage =
+      //@ts-ignore
+        error.response?.data.message || "An error occurred during scanning.";
+      toast.error(errorMessage);
       console.error("Error during PUT request:", error);
     }
   };
@@ -57,11 +64,16 @@ const QrReader = () => {
   }, []);
 
   useEffect(() => {
-    if (!qrOn) alert("Camera is blocked or not accessible. Please allow camera in your browser permissions and Reload.");
+    if (!qrOn) {
+      toast.error(
+        "Camera is blocked or not accessible. Please allow camera permissions and reload."
+      );
+    }
   }, [qrOn]);
 
   return (
     <div className="qr-reader">
+      <ToastContainer />
       <video ref={videoEl}></video>
       <div ref={qrBoxEl} className="qr-box">
         <img src={QrFrame} alt="Qr Frame" width={256} height={256} className="qr-frame" />

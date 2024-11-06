@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTachometerAlt, faUsers, faCalendarCheck, faMoneyBillWave, faChartLine, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Avatar } from '../Avatar';
+import Logo from "../../images/logo/logo1.svg";
+import { Link } from "react-router-dom";
 
 interface ManagerNavbarProps {
   managerName: string;
@@ -23,10 +25,9 @@ const logoutHandler=()=>{
 }
   return (
     <div className="flex flex-col h-screen items-center p-4 bg-white w-64">
-      {/* Logo */}
-      <div className="text-2xl font-bold mb-4 text-black">
-        <span>Logo</span>
-      </div>
+      <Link to="/">
+          <img src={Logo} alt="logo_img"  className="w-[170px] h-auto " />
+        </Link>
       <div className="flex-grow"></div>
 
       <div className="flex flex-col space-y-4 w-full m-auto">

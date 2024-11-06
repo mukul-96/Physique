@@ -33,7 +33,7 @@ function ChooseUs() {
               We Can Give A Shape Of Your Body Here!
             </h2>
             <p className="text-[16.5px] text-[#b4b4b4] mt-7 max-w-3xl md1000:max-w-[80%]">
-              At <b>Gymate</b>, we are dedicated to helping you achieve the body of your dreams. Our expert
+              At <b>Physique</b>, we are dedicated to helping you achieve the body of your dreams. Our expert
               trainers and nutritionists will work with you to create a personalized fitness and nutrition
               plan that helps you reach your specific goals.
             </p>
@@ -81,7 +81,7 @@ function ChooseUs() {
                 arrowColor={`!text-white`}
                 cN="choose-cta"
                 hover={`hover:bg-[#ff0336]`}
-                goTo="/classes"
+                goTo="/"
               />
             </div>
           </div>
