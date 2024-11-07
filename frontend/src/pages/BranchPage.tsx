@@ -35,7 +35,7 @@ export default function BranchPage() {
   return (
     <div className="min-h-screen overflow-hidden p-4 sm:p-6 lg:p-8">
      
-    <div className="flex justify-center"> {role==="user"?<div className="mb-20"><Navbar/></div>:<Navbar1 branchId={branchId} />
+    <div className="flex justify-center"> {(role==="user"||role===undefined)?<div className="mb-20"><Navbar/></div>:<Navbar1 branchId={branchId} />
      } </div>
 
       <div className="w-full px-4 sm:px-6 lg:px-10 ">

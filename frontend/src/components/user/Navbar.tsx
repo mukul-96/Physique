@@ -8,7 +8,7 @@ import NavList from "./NavList";
 function Navbar() {
   const [spin, setSpin] = useState(false);
   const [sticky, setSticky] = useState(false);
-  const {role,id}=useParams();
+  const {id}=useParams();
  
   const [isSignedIn, setIsSignedIn] = useState(false); 
 
@@ -82,7 +82,7 @@ function Navbar() {
 
 <div className="w-[3.125em] h-[3.125em] group relative">
  
-    <Link onClick={goTop} to={`/${role}/${id}/branches`}>
+    <Link onClick={goTop} to={`/user/${id}/branches`}>
       <svg
         fill="#ffffff"
         viewBox="-0.23 0 16 16"

@@ -19,7 +19,7 @@ export default function AllBranches() {
 
   return (
     <div className="">
-      <div className="flex justify-center">{role==="user"?<div className="mb-20"><Navbar/></div>:<Navbar1 branchId={branchId} />
+      <div className="flex justify-center">{( role==="user"||role==undefined)?<div className="mb-20"><Navbar/></div>:<Navbar1 branchId={branchId} />
      }</div>
        
         <div className="mt-20">

@@ -227,7 +227,7 @@ headRouter.post("/addManager", headAuth_1.default, (req, res) => __awaiter(void 
         });
     }
 }));
-headRouter.get("/branches", headAuth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+headRouter.get("/branches", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield prisma.branches.findMany();
         return res.status(200).json(result);
@@ -236,7 +236,7 @@ headRouter.get("/branches", headAuth_1.default, (req, res) => __awaiter(void 0, 
         return res.status(400).json(error);
     }
 }));
-headRouter.get("/branch/:id", headAuth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+headRouter.get("/branch/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = parseInt(req.params.id);
         const result = yield prisma.branches.findUnique({

@@ -238,7 +238,7 @@
                 });
             }
         });
-        headRouter.get("/branches",headAuth,async(req:Request,res:Response)=>{
+        headRouter.get("/branches",async(req:Request,res:Response)=>{
             try{
                 const result=await prisma.branches.findMany();
                 return res.status(200).json(result);
@@ -248,7 +248,7 @@
                 return res.status(400).json(error)
             }
         })
-        headRouter.get("/branch/:id",headAuth,async(req:Request,res:Response)=>{
+        headRouter.get("/branch/:id",async(req:Request,res:Response)=>{
            
                 try{
                     const id=parseInt(req.params.id);
