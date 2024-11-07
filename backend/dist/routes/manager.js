@@ -249,7 +249,7 @@ managerRouter.put("/editplan", managerAuth_1.default, (req, res) => __awaiter(vo
     try {
         const newPlan = yield prisma.subscription.updateMany({
             where: {
-                planId: parseInt(planId),
+                planId: planId,
                 branchId: parseInt(branchId)
             },
             data: {

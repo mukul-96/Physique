@@ -19,7 +19,7 @@ interface PlanCardProps {
 }
 
 export default function PlanCard({ plan, branchId }: PlanCardProps) {
-    const [isActive, setIsActive] = useState(plan.active);
+    const [isActive, setIsActive] = useState<boolean>(plan.active);
     const [loading, setLoading] = useState(false);
     const [toggleLoading, setToggleLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -39,7 +39,7 @@ export default function PlanCard({ plan, branchId }: PlanCardProps) {
           const response = await axios.put(url, {
               planId: plan.planId,
               branchId: branchId,
-              status: !isActive,
+              status: isActive,
           }, {
               headers: { Authorization: token },
           });
