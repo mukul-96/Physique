@@ -11,6 +11,7 @@ const user_1 = __importDefault(require("./routes/user"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const scanner_1 = __importDefault(require("./routes/scanner"));
 const cronRouter_1 = __importDefault(require("./routes/cronRouter"));
+const razorPayRouter = require("./routes/razorpay");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -25,6 +26,7 @@ app.use("/api/v1/manager", manager_1.default);
 app.use("/api/v1/head", head_1.default);
 app.use("/api/v1/scanner", scanner_1.default);
 app.use("/api/v1/cron", cronRouter_1.default);
+app.use("/api/razorpay", razorPayRouter);
 app.get('/', (req, res) => {
     res.send('<h1>Server is running</h1><p>Your backend is successfully deployed on Vercel!</p>');
 });

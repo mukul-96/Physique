@@ -10,7 +10,7 @@ export default function Navbar({ branchId }: NavbarProps) {
   const navigate=useNavigate();
   return (
     <div className="flex m-4 bg-black  justify-center max-w-[500px] rounded-full">
-        <NavButton icon={<FaHome />} label="Home" navigateTo={`/head`} />
+        <NavButton icon={<FaHome />} label="Home" navigateTo={`/head/1/branches`} />
         <div className='flex justify-center items-center'>
         <Switch branchId={branchId} />
       </div>

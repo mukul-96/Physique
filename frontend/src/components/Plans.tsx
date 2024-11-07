@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
 
 interface Plan {
@@ -19,7 +18,6 @@ export default function Plans({ plans }: PlansProps) {
     
     const plansToShow = window.innerWidth < 768 ? 1 : 3; 
     const totalSlides = Math.ceil(plans.length / plansToShow); 
-    const {role}=useParams();
     const nextSlide = () => {
         setCurrentSlide((prev) => (prev + 1) % totalSlides);
     };
@@ -32,6 +30,7 @@ export default function Plans({ plans }: PlansProps) {
         const start = currentSlide * plansToShow;
         return plans.slice(start, start + plansToShow);
     };
+   
 
     return (
         <div className="p-8">
@@ -97,9 +96,7 @@ export default function Plans({ plans }: PlansProps) {
                                     <span className="text-gray-600">Free Parking</span>
                                 </li>
                             </ul>
-                            {role==="user"?<div className='Subscribe-Btn w-full flex justify-center items-center mt-10'>
-                                <button>Subscribe Now</button>
-                            </div>:""}
+                           
                         </div>
                         
                     ))}
