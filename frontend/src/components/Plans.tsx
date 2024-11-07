@@ -2,9 +2,46 @@ import { useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
-import { getRazorpayOptions, createOrder } from '../razorpayConfig';
+import { getRazorpayOptions, createOrder,loadRazorpayScript } from '../razorpayConfig';
 
+interface RazorpayResponse {
+    razorpay_order_id: string;
+    razorpay_payment_id: string;
+    razorpay_signature: string;
+}
 
+interface RazorpayOptions {
+    key: string;
+    amount: number;
+    currency: string;
+    name: string;
+    description: string;
+    order_id: string;
+    image: string;
+    prefill: {
+        name: string;
+        email: string;
+        contact: string;
+    };
+    notes: {
+        address: string;
+        description: string;
+    };
+    handler: (response: RazorpayResponse) => void;
+    theme: {
+        color: string;
+    };
+}
+
+interface Razorpay {
+    open(): void;
+}
+
+declare global {
+    interface Window {
+        Razorpay: new (options: RazorpayOptions) => Razorpay;
+    }
+}
 
 
 interface Plan {
@@ -39,21 +76,32 @@ export default function Plans({ plans }: PlansProps) {
         const start = currentSlide * plansToShow;
         return plans.slice(start, start + plansToShow);
     };
-    const handleSubscribe=(plan:Plan) => async () => {
+    const handleSubscribe = (plan: Plan) => async () => {
+        console.log("Subscribe button clicked for plan:", plan);
+
+        setLoading(true); // Enable loading state while processing the payment
         try {
+            // Load the Razorpay script dynamically
+            const razorpayLoaded = await loadRazorpayScript();
+            if (!razorpayLoaded) {
+                toast.error("Failed to load Razorpay. Please try again.");
+                setLoading(false);
+                return;
+            }
+    
             // Step 1: Create an order on your backend
-            setLoading(true); // Enable loading state while processing the payment
             const orderData = await createOrder(plan.price);  // Fetch the order from your backend
+            console.log("Order data:", orderData);
 
             // Step 2: Define Razorpay options based on the backend order data
             const options = getRazorpayOptions(orderData, plan.description, onPaymentSuccess, onPaymentFailure);
-
-            // Step 3: Call Razorpay's Checkout method directly (do not use `new`)
-            if (window.Razorpay) {
-                window.Razorpay.Checkout(options); // Correct way to open Razorpay checkout
-            } else {
-                toast.error("Razorpay failed to load. Please try again.");  // Error if Razorpay isn't loaded
+            if (typeof window.Razorpay === "undefined") {
+                console.error("Razorpay is not available.");
+                return;
             }
+            // Step 3: Create a new Razorpay instance and open the checkout
+            const razorpayInstance = new window.Razorpay(options);
+            razorpayInstance.open(); // Open the Razorpay checkout modal
         } catch (error) {
             console.log(error);
             toast.error("Failed to create the order. Please try again.");  // Show error if order creation fails
@@ -61,6 +109,7 @@ export default function Plans({ plans }: PlansProps) {
             setLoading(false);  // Disable loading state after the process is done
         }
     };
+    
 
     const onPaymentSuccess = () => {
         toast.success("Payment successful! Thank you for your subscription.");  // Success toast
@@ -136,16 +185,12 @@ export default function Plans({ plans }: PlansProps) {
                                 </li>
                             </ul>
                             {role === "user" && (
-                    <div className="Subscribe-Btn w-full flex justify-center items-center mt-10">
                         <button 
                             onClick={handleSubscribe(plan)} 
                             disabled={loading} // Disable the button if loading
-                            className={`${
-                                loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-700"
-                            } text-white px-4 py-2 rounded-lg`}>
+                            className="Subscribe-Btn w-full flex justify-center items-center mt-10">
                             {loading ? "Processing..." : "Subscribe Now"}
                         </button>
-                    </div>
                 )}
                         </div>
                         

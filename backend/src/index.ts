@@ -24,7 +24,7 @@ app.use("/api/v1/manager", managerRouter);
 app.use("/api/v1/head", headRouter);
 app.use("/api/v1/scanner", scannerRouter);
 app.use("/api/v1/cron", cronRouter);
-app.use("/api/razorpay", razorPayRouter);
+app.use("/api/v1/razorpay", razorPayRouter);
 app.get('/', (req, res) => {
     res.send('<h1>Server is running</h1><p>Your backend is successfully deployed on Vercel!</p>');
 });

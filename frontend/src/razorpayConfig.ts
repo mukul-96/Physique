@@ -12,18 +12,25 @@ interface RazorpayResponse {
 }
 
 export const loadRazorpayScript = () => {
-    return new Promise((resolve) => {
+    return new Promise<boolean>((resolve) => {
         const script = document.createElement("script");
         script.src = "https://checkout.razorpay.com/v1/checkout.js";
-        script.onload = () => resolve(true);
-        script.onerror = () => resolve(false);
+        script.onload = () => {
+            console.log("Razorpay script loaded successfully.");
+            resolve(true);
+        };
+        script.onerror = () => {
+            console.error("Failed to load Razorpay script.");
+            resolve(false);
+        };
         document.body.appendChild(script);
     });
 };
 
+
 export const createOrder = async (amount: number) => {
     try {
-        const response = await fetch("/api/razorpay/createOrder", {
+        const response = await fetch("/api/v1/razorpay/createOrder", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -66,7 +73,7 @@ export const createOrder = async (amount: number) => {
       },
       handler: async function (response: RazorpayResponse) {
         try {
-          const verificationResponse = await fetch("/api/razorpay/verifyPayment", {
+          const verificationResponse = await fetch("/api/v1/razorpay/verifyPayment", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
