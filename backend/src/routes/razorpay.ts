@@ -1,8 +1,9 @@
-import express, { Request, Response } from "express";
+import  { Request, Response } from "express";
+import { Router } from "express";
 import Razorpay from "razorpay";
 import crypto from "crypto";
 
-const razorPayRouter = express.Router();
+const razorPayRouter = Router();
 
 const razorpayInstance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID || "",

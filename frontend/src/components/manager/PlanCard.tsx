@@ -218,9 +218,6 @@ import axios from "axios";
 import { BACKEND_URL } from "../../config";
 import Spinner from "../Spinner";
 import { FaCheckCircle } from 'react-icons/fa';
-import { getRazorpayOptions, createOrder } from '../../razorpayConfig';
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 interface PlanDetails {
     name: string;
@@ -242,39 +239,8 @@ export default function PlanCard({ plan, branchId }: PlanCardProps) {
     const [toggleLoading, setToggleLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [currentPrice, setCurrentPrice] = useState(plan.price);
-    const { role } = useParams();
 
-    const handleSubscribe = async () => {
-        try {
-            // Step 1: Create an order on your backend
-            setLoading(true); // Enable loading state while processing the payment
-            const orderData = await createOrder(plan.price);  // Fetch the order from your backend
-
-            // Step 2: Define Razorpay options based on the backend order data
-            const options = getRazorpayOptions(orderData, plan.description, onPaymentSuccess, onPaymentFailure);
-
-            // Step 3: Call Razorpay's Checkout method directly (do not use `new`)
-            if (window.Razorpay) {
-                window.Razorpay.Checkout(options); // Correct way to open Razorpay checkout
-            } else {
-                toast.error("Razorpay failed to load. Please try again.");  // Error if Razorpay isn't loaded
-            }
-        } catch (error) {
-            console.log(error);
-            toast.error("Failed to create the order. Please try again.");  // Show error if order creation fails
-        } finally {
-            setLoading(false);  // Disable loading state after the process is done
-        }
-    };
-
-    const onPaymentSuccess = () => {
-        toast.success("Payment successful! Thank you for your subscription.");  // Success toast
-    };
-
-    const onPaymentFailure = () => {
-        toast.error("Payment failed! Please try again.");  // Failure toast
-    };
-
+    
     const handleToggle = async () => {
         try {
             setToggleLoading(true);
@@ -428,18 +394,7 @@ export default function PlanCard({ plan, branchId }: PlanCardProps) {
                         <span className="text-gray-600">Free Parking</span>
                     </li>
                 </ul>
-                {role === "user" && (
-                    <div className="Subscribe-Btn w-full flex justify-center items-center mt-10">
-                        <button 
-                            onClick={handleSubscribe} 
-                            disabled={loading} // Disable the button if loading
-                            className={`${
-                                loading ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-700"
-                            } text-white px-4 py-2 rounded-lg`}>
-                            {loading ? "Processing..." : "Subscribe Now"}
-                        </button>
-                    </div>
-                )}
+                
             </li>
         </div>
     );

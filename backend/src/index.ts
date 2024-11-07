@@ -6,7 +6,7 @@ import userRouter from './routes/user';
 import dotenv from 'dotenv';
 import scannerRouter from './routes/scanner';
 import cronRouter from "./routes/cronRouter";
-const razorPayRouter = require("./routes/razorpay"); 
+import  razorPayRouter from './routes/razorpay'; 
 dotenv.config();
 
 const app = express();
