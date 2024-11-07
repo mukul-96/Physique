@@ -1,5 +1,7 @@
 import { RAZORPAY_KEY_ID } from "./config";
 import { BACKEND_URL } from "./config";
+import Logo from "../src/images/logo/logo1.svg";
+
 interface RazorpayOrder {
     id: string;
     amount: number;
@@ -56,20 +58,20 @@ export const createOrder = async (amount: number) => {
   ) => {
     return {
       key: RAZORPAY_KEY_ID,
-      amount: order.amount,  // Amount in the smallest currency unit (e.g., paise for INR)
+      amount: order.amount, 
       currency: order.currency,
-      name: "PHYSIQUE",  // Your company or branch name
+      name: "PHYSIQUE",  
       description: description,
       order_id: order.id,
-      image: "https://your-logo-url.com/logo.png",  // Optional: Your company's logo or image URL
+      image: Logo,
       prefill: {
-        name: "",  // Optionally prefill customer name
-        email: "",  // Optionally prefill customer email
-        contact: "",  // Optionally prefill customer phone number
+        name: "",  
+        email: "",  
+        contact: "",  
       },
       notes: {
-        address: "",  // Add the 'address' property (can be an empty string or an actual address)
-        description: description,  // Optional: Additional notes to pass to Razorpay
+        address: "", 
+                description: description,  
       },
       handler: async function (response: RazorpayResponse) {
         try {
@@ -97,7 +99,7 @@ export const createOrder = async (amount: number) => {
         }
       },
       theme: {
-        color: "#F37254",  // Optional: Razorpay checkout color theme
+        color: "",  
       },
     };
   };

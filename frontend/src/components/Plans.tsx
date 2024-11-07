@@ -77,46 +77,40 @@ export default function Plans({ plans }: PlansProps) {
         return plans.slice(start, start + plansToShow);
     };
     const handleSubscribe = (plan: Plan) => async () => {
-        console.log("Subscribe button clicked for plan:", plan);
 
-        setLoading(true); // Enable loading state while processing the payment
+        setLoading(true);
         try {
-            // Load the Razorpay script dynamically
             const razorpayLoaded = await loadRazorpayScript();
             if (!razorpayLoaded) {
                 toast.error("Failed to load Razorpay. Please try again.");
                 setLoading(false);
                 return;
             }
-    
-            // Step 1: Create an order on your backend
-            const orderData = await createOrder(plan.price);  // Fetch the order from your backend
-            console.log("Order data:", orderData);
+            const orderData = await createOrder(plan.price); 
 
-            // Step 2: Define Razorpay options based on the backend order data
+            
             const options = getRazorpayOptions(orderData, plan.description, onPaymentSuccess, onPaymentFailure);
             if (typeof window.Razorpay === "undefined") {
                 console.error("Razorpay is not available.");
                 return;
             }
-            // Step 3: Create a new Razorpay instance and open the checkout
             const razorpayInstance = new window.Razorpay(options);
-            razorpayInstance.open(); // Open the Razorpay checkout modal
+            razorpayInstance.open(); 
         } catch (error) {
             console.log(error);
-            toast.error("Failed to create the order. Please try again.");  // Show error if order creation fails
-        } finally {
-            setLoading(false);  // Disable loading state after the process is done
+            toast.error("Failed to create the order. Please try again.");  
+                } finally {
+            setLoading(false);
         }
     };
     
 
     const onPaymentSuccess = () => {
-        toast.success("Payment successful! Thank you for your subscription.");  // Success toast
+        toast.success("Payment successful! Thank you for your subscription.");  
     };
 
     const onPaymentFailure = () => {
-        toast.error("Payment failed! Please try again.");  // Failure toast
+        toast.error("Payment failed! Please try again."); 
     };
 
 
@@ -187,7 +181,7 @@ export default function Plans({ plans }: PlansProps) {
                             {role === "user" && (
                         <button 
                             onClick={handleSubscribe(plan)} 
-                            disabled={loading} // Disable the button if loading
+                            disabled={loading} 
                             className="Subscribe-Btn w-full flex justify-center items-center mt-10">
                             {loading ? "Processing..." : "Subscribe Now"}
                         </button>
