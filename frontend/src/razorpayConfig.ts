@@ -30,7 +30,7 @@ export const loadRazorpayScript = () => {
 
 export const createOrder = async (amount: number) => {
     try {
-        const response = await fetch(`${BACKEND_URL}/api/v1/razorpay/createOrder`, {
+        const response = await fetch(`${BACKEND_URL}api/v1/razorpay/createOrder`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export const createOrder = async (amount: number) => {
       },
       handler: async function (response: RazorpayResponse) {
         try {
-          const verificationResponse = await fetch(`${BACKEND_URL}/api/v1/razorpay/verifyPayment`, {
+          const verificationResponse = await fetch(`${BACKEND_URL}api/v1/razorpay/verifyPayment`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
