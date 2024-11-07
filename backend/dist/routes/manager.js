@@ -233,7 +233,7 @@ managerRouter.put("/toggleplan", managerAuth_1.default, (req, res) => __awaiter(
                 branchId: parseInt(branchId)
             },
             data: {
-                active: status == false ? true : false
+                active: !status
             }
         });
         return res.status(200).json(newPlan);
@@ -249,7 +249,7 @@ managerRouter.put("/editplan", managerAuth_1.default, (req, res) => __awaiter(vo
     try {
         const newPlan = yield prisma.subscription.updateMany({
             where: {
-                planId: planId,
+                planId: parseInt(planId),
                 branchId: parseInt(branchId)
             },
             data: {
