@@ -23,7 +23,10 @@ userRouter.get("/:id", async (req: Request, res: Response) => {
         const user = await prisma.user.findFirst({
             where: {
                 id: id
-            }
+            }, include: {
+                memberships: true,  
+                enrolledIn: true 
+              }
         });
 
         if (user) {

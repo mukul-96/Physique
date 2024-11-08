@@ -31,6 +31,9 @@ userRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function*
         const user = yield prisma.user.findFirst({
             where: {
                 id: id
+            }, include: {
+                memberships: true,
+                enrolledIn: true
             }
         });
         if (user) {

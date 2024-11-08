@@ -60,7 +60,7 @@ function Navbar() {
         {isSignedIn && (
   <Link
     onClick={goTop}
-    to="/profile"
+    to={`/user/${id}/profile`}
     className="rounded-full border-2 border-white flex justify-center w-[3.125em] h-[3.125em] items-center bg-red-600 relative group hover:bg-red-700"
   >
     <svg

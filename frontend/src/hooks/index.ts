@@ -163,6 +163,7 @@ export const useFetchUser = (userId: number): UseFetchUserResponse => {
           }
         });
         setUser(response.data);
+        console.log(user,"user")
       } catch (err) {
         setError("Failed to fetch staff details: " + err);
       } finally {

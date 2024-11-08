@@ -74,7 +74,7 @@ const NavButton = ({ icon, label, onClick, dropdownOptions }: NavButtonProps) =>
 
   const handleClick = () => {
     if (onClick) {
-      onClick(); // Call the onClick prop when clicked
+      onClick();
     }
     
   };
@@ -82,7 +82,7 @@ const NavButton = ({ icon, label, onClick, dropdownOptions }: NavButtonProps) =>
   return (
     <div className="relative flex flex-col items-center m-6 text-white">
       <button
-        onClick={handleClick} // attach handleClick here
+        onClick={handleClick}
         className="flex flex-col items-center"
         onMouseEnter={() => setShowDropdown(true)}
         onMouseLeave={() => {
