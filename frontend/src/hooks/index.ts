@@ -115,7 +115,6 @@ interface GymUser {
   id: number;
   email: string;
   name: string;
-  password: string;
   balance: number;
   isActive: boolean;
   memberships: History[];
@@ -163,7 +162,6 @@ export const useFetchUser = (userId: number): UseFetchUserResponse => {
           }
         });
         setUser(response.data);
-        console.log(user,"user")
       } catch (err) {
         setError("Failed to fetch staff details: " + err);
       } finally {
