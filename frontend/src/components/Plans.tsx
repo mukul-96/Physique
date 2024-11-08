@@ -45,6 +45,7 @@ declare global {
 
 
 interface Plan {
+    planId:number;
     name: string;
     description: string;
     price: number;
@@ -57,10 +58,13 @@ interface PlansProps {
 }
 
 export default function Plans({ plans }: PlansProps) {
+    console.log(plans)
     const [currentSlide, setCurrentSlide] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    const { role } = useParams();
+
+    const { role,id,branchId } = useParams();
+    const safeId=branchId?branchId:""
 
     const plansToShow = window.innerWidth < 768 ? 1 : 3; 
     const totalSlides = Math.ceil(plans.length / plansToShow); 
@@ -87,9 +91,11 @@ export default function Plans({ plans }: PlansProps) {
                 return;
             }
             const orderData = await createOrder(plan.price); 
-
+            const planId=(plan.planId);
+            const userId=id;
+            console.log("here",planId,branchId,userId)
             
-            const options = getRazorpayOptions(orderData, plan.description, onPaymentSuccess, onPaymentFailure);
+            const options = getRazorpayOptions(orderData, plan.description, onPaymentSuccess, onPaymentFailure,planId,safeId,userId);
             if (typeof window.Razorpay === "undefined") {
                 console.error("Razorpay is not available.");
                 return;
@@ -178,7 +184,7 @@ export default function Plans({ plans }: PlansProps) {
                                     <span className="text-gray-600">Free Parking</span>
                                 </li>
                             </ul>
-                            {role === "user" && (
+                            {role === "user" && plan.active && (
                         <button 
                             onClick={handleSubscribe(plan)} 
                             disabled={loading} 

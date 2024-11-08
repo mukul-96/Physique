@@ -157,7 +157,7 @@ userRouter.post("/purchaseplan",userAuth,async(req:Request,res:Response)=>{
     });
     await prisma.enrollment.create({
         data:{
-            userId:userId,
+            userId:parseInt(userId),
             subscriptionId:subscription.id
         }
     })

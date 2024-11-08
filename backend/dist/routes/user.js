@@ -156,7 +156,7 @@ userRouter.post("/purchaseplan", userAuth_1.default, (req, res) => __awaiter(voi
             });
             yield prisma.enrollment.create({
                 data: {
-                    userId: userId,
+                    userId: parseInt(userId),
                     subscriptionId: subscription.id
                 }
             });

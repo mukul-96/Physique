@@ -70,10 +70,16 @@ const addSubscription = (branchId) => __awaiter(void 0, void 0, void 0, function
     yield prisma.subscription.createMany({ data: subscription });
 });
 headRouter.post("/addbranch", headAuth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { branchName, branchAddress, managerEmail, managerPassword, managerName, branchId } = req.body;
+    const { branchName, branchAddress, managerEmail, managerPassword, managerName } = req.body;
     let newManager;
     let newBranch;
     try {
+        newBranch = yield prisma.branches.create({
+            data: {
+                name: branchName,
+                address: branchAddress,
+            }
+        });
         if (managerEmail && managerPassword && managerName) {
             const exist = yield prisma.managers.findFirst({
                 where: { email: managerEmail }
@@ -88,30 +94,22 @@ headRouter.post("/addbranch", headAuth_1.default, (req, res) => __awaiter(void 0
                     email: managerEmail,
                     password: managerPassword,
                     name: managerName,
-                    branchId: parseInt(branchId)
+                    branchId: newBranch.id
                 }
             });
         }
         const newScanner = yield prisma.authorizedScanners.create({
             data: {
                 scannerName: branchName,
-                branchId: branchId
+                branchId: newBranch.id
             }
         });
-        newBranch = yield prisma.branches.create({
+        yield prisma.branches.update({
+            where: { id: newBranch.id },
             data: {
-                name: branchName,
-                address: branchAddress,
-                managerId: newManager ? newManager.id : null,
                 scanner: { connect: { id: newScanner.id } }
             }
         });
-        if (newManager) {
-            yield prisma.managers.update({
-                where: { id: newManager.id },
-                data: { branchId: newBranch.id }
-            });
-        }
         addSubscription(newBranch.id);
         return res.status(200).json({
             message: "Branch and manager created successfully",

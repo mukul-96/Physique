@@ -46,7 +46,7 @@ model Branches {
 model Members{
   id          Int          @id @default(autoincrement())
   userId Int
-  brachId Int
+  branchId Int
   dateOfPurchase DateTime
 
 }

@@ -64,12 +64,19 @@
 
     }
     headRouter.post("/addbranch", headAuth, async (req: Request, res: Response) => {
-        const { branchName, branchAddress, managerEmail, managerPassword, managerName, branchId } = req.body;
+        const { branchName, branchAddress, managerEmail, managerPassword, managerName } = req.body;
         
         let newManager;
         let newBranch;
-    
+      
         try {
+            newBranch = await prisma.branches.create({
+                data: {
+                    name: branchName,
+                    address: branchAddress,
+                }
+            });
+    
             if (managerEmail && managerPassword && managerName) {
                 const exist = await prisma.managers.findFirst({
                     where: { email: managerEmail }
@@ -80,39 +87,27 @@
                         message: "Manager Email already exists"
                     });
                 }
-    
                 newManager = await prisma.managers.create({
                     data: {
                         email: managerEmail,
                         password: managerPassword,
                         name: managerName,
-                        branchId:  parseInt(branchId) 
-                    }
-                });
-            }
-    
+                        branchId: newBranch.id
+            }});
+            }    
             const newScanner = await prisma.authorizedScanners.create({
                 data: {
                     scannerName: branchName,
-                    branchId:branchId
+                    branchId: newBranch.id 
                 }
             });
     
-            newBranch = await prisma.branches.create({
+            await prisma.branches.update({
+                where: { id: newBranch.id },
                 data: {
-                    name: branchName,
-                    address: branchAddress,
-                    managerId: newManager ? newManager.id : null,
                     scanner: { connect: { id: newScanner.id } }
                 }
             });
-    
-            if (newManager) {
-                await prisma.managers.update({
-                    where: { id: newManager.id },
-                    data: { branchId: newBranch.id }
-                });
-            }
     
             addSubscription(newBranch.id);
     
@@ -126,6 +121,7 @@
             return res.status(500).json({ message: "An error occurred while creating the branch." });
         }
     });
+    
     
         headRouter.post("/addplan",headAuth,async (req: Request, res: Response)=>{
             const {name,description,days}=req.body;
