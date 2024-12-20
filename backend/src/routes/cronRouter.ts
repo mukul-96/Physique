@@ -45,7 +45,7 @@ const setDailyData = async () => {
 cronRouter.get('/run', async (req, res) => {
     try {
         await runDailyFeeDeduction();
-        await setDailyDate();
+        await setDailyData();
         res.status(200).send('Cron job executed successfully');
     } catch (error) {
         console.error(error);

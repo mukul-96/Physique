@@ -38,9 +38,18 @@ const runDailyFeeDeduction = () => __awaiter(void 0, void 0, void 0, function* (
         }
     }
 });
+const setDailyData = () => __awaiter(void 0, void 0, void 0, function* () {
+    yield prisma.branches.updateMany({
+        data: {
+            dailySales: 0,
+            dailyEntry: 0,
+        },
+    });
+});
 cronRouter.get('/run', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield runDailyFeeDeduction();
+        yield setDailyData();
         res.status(200).send('Cron job executed successfully');
     }
     catch (error) {

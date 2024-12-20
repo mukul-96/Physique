@@ -323,4 +323,28 @@ managerRouter.get("/sales/:id", (req, res) => __awaiter(void 0, void 0, void 0, 
         return res.status(500).json({ error });
     }
 }));
+managerRouter.get("/dailydata/:id", managerAuth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = parseInt(req.params.id);
+        if (isNaN(id)) {
+            return res.status(400).json({ mssg: "Invalid ID" });
+        }
+        const branch = yield prisma.branches.findFirst({
+            where: {
+                id: id,
+            }
+        });
+        if (!branch) {
+            return res.status(404).json({ message: "branch not found" });
+        }
+        return res.status(200).json({
+            dailyEntry: branch.dailyEntry,
+            dailySales: branch.dailySales,
+        });
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal Server Error", error: error });
+    }
+}));
 exports.default = managerRouter;

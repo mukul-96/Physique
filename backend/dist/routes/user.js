@@ -161,6 +161,14 @@ userRouter.post("/purchaseplan", userAuth_1.default, (req, res) => __awaiter(voi
                     subscriptionId: subscription.id
                 }
             });
+            yield prisma.branches.update({
+                where: {
+                    id: parseInt(branchId)
+                },
+                data: {
+                    dailySales: branch.dailySales + 1
+                }
+            });
             return res.status(200).json({
                 message: "Plan purchased successfully. Balance updated.",
                 newBalance: newBalance

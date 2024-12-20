@@ -88,6 +88,7 @@ export default function Analytics({ branchId, month, year, totalExpense }: Analy
     const grossProfitCurrentYear = monthlyTurnoverCurrentYear - totalExpense;
     const curYearDataset = generateMonthlyDataset(curYearUsers, year);
     const prevYearDataset = generateMonthlyDataset(prevYearUsers, year - 1);
+    console.log(monthlyTurnoverDifference)
 
     if (loading) return <AnalyticsSkeleton/>;
     if (error) return <p className="text-center mt-6 text-red-500">{error}</p>;

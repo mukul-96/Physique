@@ -167,7 +167,7 @@ userRouter.post("/purchaseplan",userAuth,async(req:Request,res:Response)=>{
             id: parseInt(branchId)
         },
         data:{
-            dailySales=dailySales+1;
+            dailySales:branch.dailySales+1
         }
     })
 
