@@ -340,7 +340,31 @@ managerRouter.get("/sales/:id", async (req: Request, res: Response) => {
         return res.status(500).json({ error });
     }
 });
+managerRouter.get("/dailydata/:id", managerAuth, async (req: Request, res: Response) => {
+    try {
+        const id = parseInt(req.params.id);
+    
+    if (isNaN(id)) {
+        return res.status(400).json({ mssg: "Invalid ID" });
+    }
+        const branch = await prisma.branches.findFirst({
+            where: {
+                id:id,
+            }
+        });
 
+        if (!branch) {
+            return res.status(404).json({ message: "branch not found" });
+        }
+
+        return res.status(200).json({
+            dailyEntry: branch.dailyEntry,
+            dailySales: branch.dailySales,
+        });    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: "Internal Server Error", error: error });
+    }
+});
   
 
 export default managerRouter;

@@ -3,21 +3,22 @@ import { BACKEND_URL } from "../config";
 import axios from "axios";
 import CurAndPrevYearSales from "./graphs/CurAndPrevYearSales";
 import PieSubscriptionChart from "./graphs/PieSubscriptionChart";
-import BarsDataset from "./graphs/BarsDataset"; 
+import BarsDataset from "./graphs/BarsDataset";
+import AnalyticsSkeleton from "../skeletons/AnalyticsSkeleton";
 
 interface User {
     id: number;
     userId: number;
     subscription: string;
     branchId: number;
-    date: string; 
+    date: string;
     price: number;
 }
 
 function filterUsersByMonth(users: User[], year: number, month: number): User[] {
     return users.filter((user) => {
         const userDate = new Date(user.date);
-        return userDate.getFullYear() === year && (userDate.getMonth() + 1) === month;
+        return userDate.getFullYear() === year && userDate.getMonth() + 1 === month;
     });
 }
 
@@ -45,10 +46,8 @@ interface AnalyticsProps {
     branchId: string | null;
     month: number;
     year: number;
-    totalExpense: number;    
+    totalExpense: number;
 }
-
-
 
 export default function Analytics({ branchId, month, year, totalExpense }: AnalyticsProps) {
     const [curYearUsers, setCurYearUsers] = useState<User[]>([]);
@@ -57,9 +56,7 @@ export default function Analytics({ branchId, month, year, totalExpense }: Analy
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (branchId) {
-            fetchAnalyticsData();
-        }
+        if (branchId) fetchAnalyticsData();
     }, [branchId, month, year]);
 
     const fetchAnalyticsData = async () => {
@@ -67,7 +64,7 @@ export default function Analytics({ branchId, month, year, totalExpense }: Analy
         setError(null);
         try {
             const response = await axios.get(`${BACKEND_URL}manager/sales/${branchId}`, {
-                params: { month, year }
+                params: { month, year },
             });
             const data = response.data;
             setCurYearUsers(data.curYearUsers);
@@ -88,58 +85,55 @@ export default function Analytics({ branchId, month, year, totalExpense }: Analy
     const yearlyTurnoverPrevYear = calculateTurnover(prevYearUsers);
     const monthlyTurnoverDifference = monthlyTurnoverCurrentYear - monthlyTurnoverPrevYear;
     const yearlyTurnoverDifference = yearlyTurnoverCurrentYear - yearlyTurnoverPrevYear;
-    const monthlyStatus = monthlyTurnoverDifference >= 0 ? "Profit" : "Loss";
-    const yearlyStatus = yearlyTurnoverDifference >= 0 ? "Profit" : "Loss";
     const grossProfitCurrentYear = monthlyTurnoverCurrentYear - totalExpense;
     const curYearDataset = generateMonthlyDataset(curYearUsers, year);
     const prevYearDataset = generateMonthlyDataset(prevYearUsers, year - 1);
 
-    if (loading) return <p>Loading data...</p>;
-    if (error) return <p>{error}</p>;
+    if (loading) return <AnalyticsSkeleton/>;
+    if (error) return <p className="text-center mt-6 text-red-500">{error}</p>;
 
     return (
-        <div className="p-6 bg-white shadow-lg rounded-lg">
-            <div className="flex flex-col md:flex-row justify-center items-center mb-6 bg-purple-100">
-                <div className="flex flex-col items-center mx-10">
-                    <h3 className="text-xl font-semibold">Monthly Turnover</h3>
-                    <p className="text-2xl font-bold text-black">${monthlyTurnoverCurrentYear}</p>
-                    <p className={`text-lg font-bold ${grossProfitCurrentYear >= 0 ? "text-green-500" : "text-red-500"}`}>
-                        ${grossProfitCurrentYear} ({monthlyStatus})
-                    </p>
+        <div className="p-8 bg-gray-50 min-h-screen">
+            <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-lg p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div className="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-6 rounded-lg shadow-md">
+                        <h3 className="text-lg font-semibold">Monthly Turnover</h3>
+                        <p className="text-3xl font-bold mt-2">${monthlyTurnoverCurrentYear}</p>
+                        <p className={`mt-1 font-bold text-xl ${grossProfitCurrentYear >= 0 ? "text-green-200" : "text-red-500"}`}>
+                            ${grossProfitCurrentYear} 
+                        </p>
+                    </div>
+                    <div className="bg-gradient-to-r from-orange-400 to-orange-300 text-white p-6 rounded-lg shadow-md">
+                        <h3 className="text-lg font-semibold">Annual Turnover</h3>
+                        <p className="text-3xl font-bold mt-2">${yearlyTurnoverCurrentYear}</p>
+                        <p className={`mt-1 font-bold text-xl ${yearlyTurnoverDifference >= 0 ? "text-green-300" : "text-red-200"}`}>
+                            ${yearlyTurnoverDifference} 
+                        </p>
+                    </div>
                 </div>
-                <div className="flex flex-col items-center mx-10">
-                    <h3 className="text-xl font-semibold">Annual Turnover</h3>
-                    <p className="text-2xl font-bold text-black">${yearlyTurnoverCurrentYear}</p>
-                    <p>Previous Year: ${yearlyTurnoverPrevYear}</p>
-                    <p className={`text-lg font-bold ${yearlyTurnoverDifference >= 0 ? "text-green-500" : "text-red-500"}`}>
-                        ${yearlyTurnoverDifference} ({yearlyStatus})
-                    </p>
-                </div>
-            </div>
 
-            <div className="mb-6 flex flex-col items-center">
-                <CurAndPrevYearSales curYear={year} prevYear={year - 1} curYearUsers={curYearUsers} prevYearUsers={prevYearUsers} />
-                <h1 className="font-semibold text-base">Subscription Sales Comparison</h1>
-            </div>
-
-            <div className="mb-6 flex flex-col items-center md:flex-row">
-                <h3 className="text-lg font-semibold">Subscription Distribution</h3>
-                <div className="flex flex-col items-center mx-4">
-                    <PieSubscriptionChart curUsers={curYearMonthUsers} />
-                    <h1 className="font-semibold text-base">{year}</h1>
+                <div className="mb-8">
+                    <h2 className="text-2xl font-semibold text-gray-700 mb-4">Sales Comparison</h2>
+                    <CurAndPrevYearSales curYear={year} prevYear={year - 1} curYearUsers={curYearUsers} prevYearUsers={prevYearUsers} />
                 </div>
-                <div className="flex flex-col items-center mx-4">
-                    <PieSubscriptionChart curUsers={prevYearMonthUsers} />
-                    <h1 className="font-semibold text-base">{year - 1}</h1>
-                </div>
-            </div>
 
-            <div className="mb-6 flex flex-col md:flex-row justify-center gap-6">
-                <h3 className="text-lg font-semibold">Subscription Distribution - Bar Graph</h3>
-                <BarsDataset dataset={curYearDataset} title={`Subscription Distribution - ${year}`} />
-                <BarsDataset dataset={prevYearDataset} title={`Subscription Distribution - ${year - 1}`} />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="p-4 bg-white shadow-md rounded-lg">
+                        <h3 className="text-lg font-semibold text-gray-700 mb-2">{year} Subscription Distribution</h3>
+                        <PieSubscriptionChart curUsers={curYearMonthUsers} />
+                    </div>
+                    <div className="p-4 bg-white shadow-md rounded-lg">
+                        <h3 className="text-lg font-semibold text-gray-700 mb-2">{year - 1} Subscription Distribution</h3>
+                        <PieSubscriptionChart curUsers={prevYearMonthUsers} />
+                    </div>
+                </div>
+
+                <div className="mt-8">
+                    <h2 className="text-2xl font-semibold text-gray-700 mb-4">Subscription Trends</h2>
+                    <BarsDataset dataset={curYearDataset} title={`Subscriptions - ${year}`} />
+                    <BarsDataset dataset={prevYearDataset} title={`Subscriptions - ${year - 1}`} />
+                </div>
             </div>
         </div>
     );
 }
-

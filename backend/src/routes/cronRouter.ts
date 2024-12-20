@@ -33,10 +33,19 @@ const runDailyFeeDeduction = async () => {
         }
     }
 };
+const setDailyData = async () => {
+    await prisma.branches.updateMany({
+      data: {
+        dailySales: 0,
+        dailyEntry: 0,
+      },
+    });
+  };
 
 cronRouter.get('/run', async (req, res) => {
     try {
         await runDailyFeeDeduction();
+        await setDailyDate();
         res.status(200).send('Cron job executed successfully');
     } catch (error) {
         console.error(error);

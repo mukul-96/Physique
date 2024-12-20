@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Analytics from "../components/Analytics";
 import { useEffect, useState, useMemo } from "react";
 import { useFetchBranchDetails } from "../hooks";
+import AnalyticsSkeleton from "../skeletons/AnalyticsSkeleton";
 
 
 export default function BranchAnalytics() {
@@ -11,10 +12,12 @@ export default function BranchAnalytics() {
   const [month, setMonth] = useState<number>(currentDate.getMonth() + 1);
   const [year, setYear] = useState<number>(currentDate.getFullYear());
   const [salary, setSalary] = useState<number>(0);
-  const { branchId } = useParams<{ branchId: string | undefined }>();
+  const  {id}  = useParams<{ id: string | undefined }>();
+  const  {branchId}  = useParams<{ branchId: string | undefined }>();
   const [totalExpense, setTotalExpense] = useState<number>(0);
-
-  const safeId: string | null = branchId ?? null;
+  const  {role}  = useParams<{ role: string | undefined }>();
+  console.log(id)
+  const safeId: string | null = (id ||branchId)?? null;
   const { branchDetails, loading, error } = useFetchBranchDetails(safeId);
 
   const trainers = useMemo(() =>
@@ -31,14 +34,15 @@ export default function BranchAnalytics() {
     setTotalExpense(expense);
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div><AnalyticsSkeleton/></div>;
   if (error) return <div>Error loading branch details: {error}</div>;
   if (!branchDetails) return <div>No branch details available</div>;
 
   return (
     <div>
       <div className="flex justify-center">
-        <Navbar branchId={safeId} />
+        {role&&
+        <Navbar branchId={safeId} />}
       </div>      
       <div className="flex flex-col md:flex-row items-center justify-between p-10 space-y-4 md:space-y-0">
         <div className="space-y-2 w-full md:w-auto">
@@ -75,7 +79,7 @@ export default function BranchAnalytics() {
       </div>
 
       <Analytics branchId={safeId} month={month} year={year} totalExpense={totalExpense} />
-      <HeadExpense branchId={branchId ? Number(branchId) : null} month={month} year={year} salary={salary} onTotalExpense={handleTotalExpense} />
+      <HeadExpense branchId={safeId ? Number(safeId) : null} month={month} year={year} salary={salary} onTotalExpense={handleTotalExpense} />
     </div>
   );
 }

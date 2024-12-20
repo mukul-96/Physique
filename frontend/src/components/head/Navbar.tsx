@@ -131,7 +131,7 @@ const Switch = ({ branchId }: { branchId: string | null | undefined }) => {
       navigate('/head');
     } else {
       if (checked) {
-        navigate(`/head/branch/${branchId}`);
+        navigate(`/head/1/branches/branch/${branchId}`);
       } else {
         navigate(`/head/analytics/${branchId}`);
       }

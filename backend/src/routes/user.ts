@@ -162,6 +162,14 @@ userRouter.post("/purchaseplan",userAuth,async(req:Request,res:Response)=>{
             subscriptionId:subscription.id
         }
     })
+    await prisma.branches.update({
+        where:{
+            id: parseInt(branchId)
+        },
+        data:{
+            dailySales=dailySales+1;
+        }
+    })
 
     return res.status(200).json({
         message: "Plan purchased successfully. Balance updated.",

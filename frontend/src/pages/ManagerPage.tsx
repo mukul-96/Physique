@@ -8,6 +8,7 @@ import ManagerDashboard from "../components/manager/ManagerDashboard";
 import Plans from "../components/manager/Plans";
 import Members from "../components/manager/Members";
 import Expense from "../components/manager/Expense";
+import BranchAnalytics from "./BranchAnalytics";
 
 export default function ManagerPage() {
   const { id } = useParams();
@@ -35,7 +36,7 @@ export default function ManagerPage() {
       case 'Plans':
         return <div className="h-full w-full "><Plans branchId={branchId}/></div>;
       case 'Analytics':        
-        return <div>Analytics</div>;
+        return <div className="h-full w-full overflow-x-hidden"><BranchAnalytics/></div>;
         case 'Expense':
           return <div><Expense branchId={branchId} salary={salary} ></Expense></div>
         default:
@@ -49,11 +50,13 @@ export default function ManagerPage() {
         {managerLoading ? <ManagerNavbarSkeleton /> : manager && <ManagerNavbar managerName={manager.name} setButton={setActiveButton} />}
       </div>
       <div className="ml-[20%] w-4/6 h-screen overflow-y-auto grid grid-rows-[30%_70%]">
-      <div className="h-full w-full p-6"><ManagerPageGraphs></ManagerPageGraphs></div>
+      <div className="h-full w-full p-3">
+        <ManagerPageGraphs></ManagerPageGraphs>
+      </div>
     <div className="h-full w-full">        {renderActiveComponent()} 
     </div>
       </div>
-      <div className="w-1/6"></div>
+      <div className="w-1/6 "></div>
     </div>
   );
 }
