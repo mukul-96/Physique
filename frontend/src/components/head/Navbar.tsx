@@ -124,11 +124,18 @@ const Switch = ({ branchId }: { branchId: string | null | undefined }) => {
     if (branchId && currentPath.includes(`/head/analytics/${branchId}`)) {
       setChecked(true);
     }
+    if (!branchId && currentPath.includes(`/head/analytics`)) {
+      setChecked(true);
+    }
   }, [branchId]);
 
   const handleToggle = () => {
     if (!branchId) {
-      navigate('/head');
+      if(!checked)
+     navigate('/head/analytics');
+    else
+    navigate('/head/1/branches');
+
     } else {
       if (checked) {
         navigate(`/head/1/branches/branch/${branchId}`);

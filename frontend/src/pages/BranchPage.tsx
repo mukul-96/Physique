@@ -10,6 +10,7 @@ import Images from "../components/Images";
 import { Testimonial } from "../components/Testimonial";
 import Navbar1 from "../components/head/Navbar";
 import Navbar from "../components/user/Navbar"
+import BranchPageSkeleton from "../skeletons/BranchPageSkeleton";
 
 export default function BranchPage() {
   const { branchId } = useParams<{ branchId: string }>();
@@ -23,7 +24,7 @@ export default function BranchPage() {
 
   const { branchDetails, loading, error } = useFetchBranchDetails(safeId);
 
-  if (loading) return <div className="text-center mt-20">Loading...</div>;
+  if (loading) return <div><BranchPageSkeleton/></div>;
   if (error) return <div className="text-center mt-20">Error loading branch details: {error}</div>;
   if (!branchDetails) return <div className="text-center mt-20">No branch details available</div>;
 

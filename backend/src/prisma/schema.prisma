@@ -24,10 +24,12 @@ model History {
   id           Int         @id @default(autoincrement())
   userId       Int
   subscription String
-  branchId     Int
+  branchId     Int 
   price         Int   @default(1000)
   date         DateTime
   user         User        @relation(fields: [userId], references: [id])
+  branch       Branches    @relation(fields: [branchId], references: [id])
+
 }
 
 model Branches {
@@ -44,7 +46,7 @@ model Branches {
   plans       Subscription[]
   expenditure Utilities[]@relation("BranchUtilities")
   scanner AuthorizedScanners[]
-
+  sales History[]
 }
 model Members{
   id          Int          @id @default(autoincrement())

@@ -47,11 +47,12 @@ export default function ManagerPage() {
   return (
     <div className="flex h-screen overflow-hidden bg-slate-50 w-full">
       <div className="fixed h-full w-1/6 bg-white ">
-        {managerLoading ? <ManagerNavbarSkeleton /> : manager && <ManagerNavbar managerName={manager.name} setButton={setActiveButton} />}
+        {managerLoading ? <ManagerNavbarSkeleton  /> : manager && <ManagerNavbar managerName={manager.name} setButton={setActiveButton} />}
       </div>
       <div className="ml-[20%] w-4/6 h-screen overflow-y-auto grid grid-rows-[30%_70%]">
-      <div className="h-full w-full p-3">
-        <ManagerPageGraphs></ManagerPageGraphs>
+      <div className="h-full w-full p-3 ">
+      
+        <ManagerPageGraphs branchId={branchId}></ManagerPageGraphs>
       </div>
     <div className="h-full w-full">        {renderActiveComponent()} 
     </div>

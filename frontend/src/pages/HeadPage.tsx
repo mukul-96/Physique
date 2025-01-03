@@ -2,7 +2,6 @@ import Navbar from '../components/head/Navbar';
 import { useFetchBranches } from '../hooks';
 import BranchCard from '../components/head/BranchCard';
 import { useState,useEffect } from 'react';
-
 export default function HeadPage() {
     const [hasFetched,setHasFetched]=useState<boolean>(false);
     const { branches=[], loading, error } = useFetchBranches();
@@ -20,7 +19,7 @@ export default function HeadPage() {
             </div>
             {error?<div>error</div>:""}
             <div className='flex flex-wrap gap-5 mt-10 p-10'>
-            {loading ? "loading..." : (
+            {loading ? "Loading": (
                 branches.map((branch, index) => (
                     <BranchCard branch={branch} key={index} />
                 ))

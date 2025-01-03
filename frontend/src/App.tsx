@@ -11,6 +11,7 @@ import QrReader from './components/QrReader';
 import Profile from './components/user/Profile.tsx';
 import Home from './pages/Home';
 import AllBranches from './components/AllBranches.tsx';
+import AllBranchesAnalytics from './pages/AllBranchesAnalytics.tsx';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path='/:role/:id/branches' element={<AllBranches/>}></Route>
         <Route path='/:role/:id/branches/branch/:branchId' element={<BranchPage/>}></Route>
         <Route path='/:role/analytics/:branchId' element={<BranchAnalytics/>}></Route>
+        <Route path='/:rolw/analytics' element={<AllBranchesAnalytics/>}></Route>
         <Route path='/:role/:id' element={<Home/>}></Route>
         <Route path='/:role/:id/profile' element={<Profile/>}></Route>
         <Route path='/qr' element={<Qr/>}></Route>

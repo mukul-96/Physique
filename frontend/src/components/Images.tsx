@@ -12,24 +12,24 @@ export default function Images() {
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 w-full h-[450px] gap-2 m-4 p-10'>
       <div
-        className="bg-purple-300 rounded-xl"
+        className=" rounded-xl"
         style={{ backgroundImage: `url(${assets[0].img1})`, backgroundSize: 'cover' }}
       ></div>
       <div className='grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-2'>
         <div
-          className='bg-red-300 rounded-xl'
+          className='rounded-xl'
           style={{ backgroundImage: `url(${assets[0].img2})`, backgroundSize: 'cover' }}
         ></div>
         <div
-          className='bg-red-300 rounded-xl'
+          className=' rounded-xl'
           style={{ backgroundImage: `url(${assets[0].img3})`, backgroundSize: 'cover' }}
         ></div>
         <div
-          className='bg-red-300 rounded-xl'
+          className=' rounded-xl'
           style={{ backgroundImage: `url(${assets[0].img4})`, backgroundSize: 'cover' }}
         ></div>
         <div
-          className='bg-red-300 rounded-xl'
+          className=' rounded-xl'
           style={{ backgroundImage: `url(${assets[0].img5})`, backgroundSize: 'cover' }}
         ></div>
       </div>

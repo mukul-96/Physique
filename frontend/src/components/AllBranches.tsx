@@ -4,6 +4,7 @@ import { useEffect,useState } from "react";
 import { useFetchBranches } from "../hooks";
 import { useParams } from "react-router-dom";
 import BranchCard from "./head/BranchCard";
+import BranchesSkeleton from "../skeletons/BranchesSkeleton";
 
 export default function AllBranches() {
     const [hasFetched,setHasFetched]=useState<boolean>(false);
@@ -25,7 +26,7 @@ export default function AllBranches() {
         <div className="mt-20">
         {error?<div>error</div>:""}
             <div className='flex flex-wrap gap-5 mt-10 p-10'>
-            {loading ? "loading..." : (
+            {loading ? <BranchesSkeleton/> : (
                 branches.map((branch, index) => (
                     <BranchCard branch={branch} key={index} />
                 ))
