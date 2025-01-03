@@ -1,28 +1,15 @@
-import Navbar from "../components/head/Navbar"
-
-// export default function AllBranchesAnalytics() {
-//     const branchId=null;
-//   return (
-//     <div>
-//         <div className='flex justify-center'>
-                       
-//                         <Navbar branchId={branchId} />
-//                    </div>
-//       <p>all branches analytics</p>
-//     </div>
-//   )
-// }
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { BACKEND_URL } from "../config";
-
+import Navbar from "../components/head/Navbar";
 
 export default function AllBranchesAnalytics() {
   const currentDate = new Date();
-  const branchId=null;
+  const branchId = null;
   const [chartData, setChartData] = useState<any>(null);
   const [month, setMonth] = useState<number>(currentDate.getMonth() + 1);
   const [year, setYear] = useState<number>(currentDate.getFullYear());
+
   const fetchSalesData = async () => {
     try {
       const response = await fetch(
@@ -38,7 +25,9 @@ export default function AllBranchesAnalytics() {
   useEffect(() => {
     fetchSalesData();
   }, [year, month]);
-  const data = {
+
+  // Check if chartData is available before trying to map over it
+  const data = chartData ? {
     labels: chartData.map((item: any) => item.branchName),
     datasets: [
       {
@@ -49,7 +38,7 @@ export default function AllBranchesAnalytics() {
         borderWidth: 1,
       },
     ],
-  };
+  } : { labels: [], datasets: [] };
 
   const options = {
     scales: {
@@ -62,9 +51,9 @@ export default function AllBranchesAnalytics() {
   return (
     <div>
       <div className='flex justify-center'>
-                       
-               <Navbar branchId={branchId} />
-                     </div>
+        <Navbar branchId={branchId} />
+      </div>
+
       <div className="flex flex-col md:flex-row items-center justify-between p-10 space-y-4 md:space-y-0">
         <div className="space-y-2 w-full md:w-auto">
           <label htmlFor="month" className="block text-sm font-medium text-gray-700">Select Month:</label>
@@ -98,13 +87,19 @@ export default function AllBranchesAnalytics() {
           </select>
         </div>
       </div>
+
       <h2 className="text-center font-bold text-xl mt-6 mb-4">
         Branch Sales for {month}/{year}
       </h2>
+
+      {/* Render a loading message or chart */}
       <div className="p-4">
-        <Bar data={data} options={options} />
+        {chartData ? (
+          <Bar data={data} options={options} />
+        ) : (
+          <p className="text-center">Loading sales data...</p>
+        )}
       </div>
     </div>
-  )
+  );
 }
-

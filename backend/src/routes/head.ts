@@ -268,58 +268,50 @@ headRouter.get("/branchPlan",headAuth,async(req:Request,res:Response)=>{
                     return res.status(400).json(error)
                 }
         })
-        headRouter.get('/head/branch-sales', async (req: Request, res: Response) => {
+        headRouter.get('/branch-sales', async (req: Request, res: Response) => {
             const { year, month } = req.query;
           
-            // Validate input and ensure year and month are valid numbers
-            const parsedYear = parseInt(year as string, 10); // Ensuring 'year' is cast to string
-            const parsedMonth = parseInt(month as string, 10); // Ensuring 'month' is cast to string
-          
-            // Validate year and month
+            const parsedYear = parseInt(year as string, 10); 
+                       const parsedMonth = parseInt(month as string, 10);        
             if (isNaN(parsedYear) || isNaN(parsedMonth) || parsedMonth < 1 || parsedMonth > 12) {
               return res.status(400).json({ error: 'Year and month must be valid numbers, and month should be between 1 and 12' });
             }
           
             try {
-              // Fetch sales data for branches for the given year and month
               const salesData = await prisma.history.groupBy({
                 by: ['branchId'],
                 where: {
                   date: {
-                    gte: new Date(parsedYear, parsedMonth - 1, 1), // Start of the month (0-indexed month)
-                    lt: new Date(parsedYear, parsedMonth, 1), // Start of the next month (exclusive)
+                    gte: new Date(parsedYear, parsedMonth - 1, 1), 
+                    lt: new Date(parsedYear, parsedMonth, 1), 
                   },
                 },
                 _sum: {
-                  price: true, // Sum of prices (total sales)
+                  price: true, 
                 },
               });
           
-              // Extract branchIds from the salesData
               const branchIds = salesData.map((data) => data.branchId);
           
-              // Fetch the branch names for the aggregated branchIds
               const branches = await prisma.branches.findMany({
                 where: {
-                  id: { in: branchIds }, // Match branchId with those found in salesData
+                  id: { in: branchIds },
                 },
                 select: {
                   id: true,
-                  name: true, // Get branch name
+                  name: true, 
                 },
               });
           
-              // Map sales data with branch names
               const responseData = salesData.map((data) => {
                 const branch = branches.find((b) => b.id === data.branchId);
                 return {
-                  branchName: branch ? branch.name : 'Unknown', // Default to 'Unknown' if no branch found
-                  sales: data._sum.price, // Aggregate sum of prices (sales)
+                  branchName: branch ? branch.name : 'Unknown', 
+                  sales: data._sum.price, 
                 };
               });
           
-              // Send the final response
-              res.json(responseData);
+            res.json(responseData);
           
             } catch (err) {
               console.error('Error fetching sales data:', err);

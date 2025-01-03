@@ -26,7 +26,7 @@ function App() {
         <Route path='/:role/:id/branches' element={<AllBranches/>}></Route>
         <Route path='/:role/:id/branches/branch/:branchId' element={<BranchPage/>}></Route>
         <Route path='/:role/analytics/:branchId' element={<BranchAnalytics/>}></Route>
-        <Route path='/:rolw/analytics' element={<AllBranchesAnalytics/>}></Route>
+        <Route path='/:role/analytics' element={<AllBranchesAnalytics/>}></Route>
         <Route path='/:role/:id' element={<Home/>}></Route>
         <Route path='/:role/:id/profile' element={<Profile/>}></Route>
         <Route path='/qr' element={<Qr/>}></Route>
