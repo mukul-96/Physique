@@ -263,27 +263,28 @@ headRouter.get('/branch-sales', (req, res) => __awaiter(void 0, void 0, void 0, 
         return res.status(400).json({ error: 'Year and month must be valid numbers, and month should be between 1 and 12' });
     }
     try {
-        const salesData = yield prisma.history.groupBy({
-            by: ['branchId'],
+        const gte = new Date(parsedYear, parsedMonth - 1, 1);
+        const lt = new Date(parsedYear, parsedMonth, 1);
+        const historyData = yield prisma.history.findMany({
             where: {
                 date: {
                     gte: new Date(parsedYear, parsedMonth - 1, 1),
                     lt: new Date(parsedYear, parsedMonth, 1),
                 },
             },
-            _sum: {
-                price: true,
+            include: {
+                branch: true, // Ensure this joins branch data directly
             },
+        });
+        const salesData = yield prisma.history.groupBy({
+            by: ['branchId'],
+            where: { date: { gte, lt } },
+            _sum: { price: true },
         });
         const branchIds = salesData.map((data) => data.branchId);
         const branches = yield prisma.branches.findMany({
-            where: {
-                id: { in: branchIds },
-            },
-            select: {
-                id: true,
-                name: true,
-            },
+            where: { id: { in: branchIds } },
+            select: { id: true, name: true },
         });
         const responseData = salesData.map((data) => {
             const branch = branches.find((b) => b.id === data.branchId);
@@ -296,6 +297,227 @@ headRouter.get('/branch-sales', (req, res) => __awaiter(void 0, void 0, void 0, 
     }
     catch (err) {
         console.error('Error fetching sales data:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}));
+headRouter.get('/branch-history', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { year, month } = req.query;
+    const parsedYear = parseInt(year, 10);
+    const parsedMonth = parseInt(month, 10);
+    if (isNaN(parsedYear) || isNaN(parsedMonth) || parsedMonth < 1 || parsedMonth > 12) {
+        return res.status(400).json({ error: 'Year and month must be valid numbers, and month should be between 1 and 12' });
+    }
+    try {
+        const gte = new Date(parsedYear, parsedMonth - 1, 1);
+        const lt = new Date(parsedYear, parsedMonth, 1);
+        const historyData = yield prisma.history.findMany({
+            where: {
+                date: {
+                    gte: new Date(parsedYear, parsedMonth - 1, 1),
+                    lt: new Date(parsedYear, parsedMonth, 1),
+                },
+            },
+            include: {
+                branch: true, // Ensure this joins branch data directly
+            },
+        });
+        // console.log('History Data with Branches:', historyData);
+        //               const salesData = await prisma.history.groupBy({
+        //                 by: ['branchId'],
+        //                 where: { date: { gte, lt } },
+        //                 _sum: { price: true },
+        //               });
+        //               console.log('Sales Data:', salesData);
+        //               const branchIds = salesData.map((data) => data.branchId);
+        //               console.log('Branch IDs:', branchIds);
+        //               const branches = await prisma.branches.findMany({
+        //                 where: { id: { in: branchIds } },
+        //                 select: { id: true, name: true },
+        //               });
+        //               console.log('Branches:', branches);
+        //               const responseData = salesData.map((data) => {
+        //                 const branch = branches.find((b) => b.id === data.branchId);
+        //                 return {
+        //                   branchName: branch ? branch.name : 'Unknown',
+        //                   sales: data._sum.price,
+        //                 };
+        //               });
+        //               console.log('Response Data:', responseData);
+        res.json(historyData);
+    }
+    catch (err) {
+        console.error('Error fetching sales data:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}));
+headRouter.get('/branch-sales', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { year, month } = req.query;
+    const parsedYear = parseInt(year, 10);
+    const parsedMonth = parseInt(month, 10);
+    if (isNaN(parsedYear) || isNaN(parsedMonth) || parsedMonth < 1 || parsedMonth > 12) {
+        return res.status(400).json({ error: 'Year and month must be valid numbers, and month should be between 1 and 12' });
+    }
+    try {
+        const gte = new Date(parsedYear, parsedMonth - 1, 1);
+        const lt = new Date(parsedYear, parsedMonth, 1);
+        const historyData = yield prisma.history.findMany({
+            where: {
+                date: {
+                    gte: new Date(parsedYear, parsedMonth - 1, 1),
+                    lt: new Date(parsedYear, parsedMonth, 1),
+                },
+            },
+            include: {
+                branch: true, // Ensure this joins branch data directly
+            },
+        });
+        const salesData = yield prisma.history.groupBy({
+            by: ['branchId'],
+            where: { date: { gte, lt } },
+            _sum: { price: true },
+        });
+        const branchIds = salesData.map((data) => data.branchId);
+        const branches = yield prisma.branches.findMany({
+            where: { id: { in: branchIds } },
+            select: { id: true, name: true },
+        });
+        const responseData = salesData.map((data) => {
+            const branch = branches.find((b) => b.id === data.branchId);
+            return {
+                branchName: branch ? branch.name : 'Unknown',
+                sales: data._sum.price,
+            };
+        });
+        res.json(responseData);
+    }
+    catch (err) {
+        console.error('Error fetching sales data:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}));
+headRouter.get('/branch-sales-yearly', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { year } = req.query;
+    const parsedYear = parseInt(year, 10);
+    if (isNaN(parsedYear)) {
+        return res
+            .status(400)
+            .json({ error: 'Year must be a valid number.' });
+    }
+    try {
+        const gte = new Date(parsedYear, 0, 1); // Start of the year (Jan 1st)
+        const lt = new Date(parsedYear + 1, 0, 1); // Start of the next year (Jan 1st)
+        // Fetch sales grouped by branch
+        const salesData = yield prisma.history.groupBy({
+            by: ['branchId'],
+            where: { date: { gte, lt } },
+            _sum: { price: true },
+        });
+        const branchIds = salesData.map((data) => data.branchId);
+        // Fetch branch names for IDs
+        const branches = yield prisma.branches.findMany({
+            where: { id: { in: branchIds } },
+            select: { id: true, name: true },
+        });
+        // Combine sales data with branch names
+        const responseData = salesData.map((data) => {
+            const branch = branches.find((b) => b.id === data.branchId);
+            return {
+                branchName: branch ? branch.name : 'Unknown',
+                sales: data._sum.price,
+            };
+        });
+        res.json(responseData);
+    }
+    catch (err) {
+        console.error('Error fetching yearly sales data:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}));
+headRouter.get('/branch-history-yearly', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { year } = req.query;
+    const parsedYear = parseInt(year, 10);
+    if (isNaN(parsedYear)) {
+        return res
+            .status(400)
+            .json({ error: 'Year must be a valid number.' });
+    }
+    try {
+        let gte = new Date(parsedYear, 0, 1); // Start of the year (Jan 1st)
+        let lt = new Date(parsedYear + 1, 0, 1); // Start of the next year (Jan 1st)
+        const currentHistoryData = yield prisma.history.findMany({
+            where: { date: { gte, lt } },
+            include: {
+                branch: true, // Ensure to join branch data directly
+            },
+        });
+        gte = new Date(parsedYear - 1, 0, 1); // Start of the year (Jan 1st)
+        lt = new Date(parsedYear, 0, 1);
+        const previousHistoryData = yield prisma.history.findMany({
+            where: { date: { gte, lt } },
+            include: {
+                branch: true, // Ensure to join branch data directly
+            },
+        });
+        res.json({
+            currentYear: { year: parsedYear, data: currentHistoryData },
+            previousYear: { year: parsedYear - 1, data: previousHistoryData },
+        });
+    }
+    catch (err) {
+        console.error('Error fetching yearly history data:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}));
+//   headRouter.get('/branch-history-yearly-numbers', async (req: Request, res: Response) => {
+//     const { year } = req.query;
+//     const parsedYear = parseInt(year as string, 10);
+//     if (isNaN(parsedYear)) {
+//       return res
+//         .status(400)
+//         .json({ error: 'Year must be a valid number.' });
+//     }
+//     try {
+//       let gte = new Date(parsedYear, 0, 1); // Start of the year (Jan 1st)
+//       let lt = new Date(parsedYear + 1, 0, 1); // Start of the next year (Jan 1st)
+//       const currenthistoryData = await prisma.history.findMany({
+//         where: { date: { gte, lt } },
+//         include: {
+//           branch: true, // Ensure to join branch data directly
+//         },
+//       });
+//        gte = new Date(parsedYear-1, 0, 1); // Start of the year (Jan 1st)
+//        lt = new Date(parsedYear, 0, 1); 
+//       const previoushistoryData = await prisma.history.findMany({
+//         where: { date: { gte, lt } },
+//         include: {
+//           branch: true, // Ensure to join branch data directly
+//         },
+//       });
+//       res.json(currenthistoryData);
+//     } catch (err) {
+//       console.error('Error fetching yearly history data:', err);
+//       res.status(500).json({ error: 'Internal Server Error' });
+//     }
+//   });
+headRouter.get('/mainInfo', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { year } = req.query;
+        const parsedYear = parseInt(year, 10);
+        let gte = new Date(parsedYear, 0, 1);
+        let lt = new Date(parsedYear + 1, 0, 1);
+        const branches = yield prisma.branches.findMany();
+        const totalBranches = branches.length;
+        const employees = yield prisma.rooster.findMany();
+        const sales = yield prisma.history.findMany({
+            where: { date: { gte, lt } }
+        });
+        const totalEmployees = employees.length;
+        const totalSales = sales.length;
+        console.log(totalBranches, totalEmployees);
+        return res.status(200).json({ totalBranches, totalEmployees, totalSales });
+    }
+    catch (error) {
+        console.error('Error fetching yearly history data:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }));

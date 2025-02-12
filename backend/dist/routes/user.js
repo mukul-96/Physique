@@ -75,7 +75,7 @@ userRouter.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
 }));
 userRouter.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email, password, name } = req.body;
+        const { email, password, name, age, weight } = req.body;
         const existingUser = yield prisma.user.findFirst({
             where: {
                 email: email
@@ -90,7 +90,9 @@ userRouter.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, funct
             data: {
                 email: email,
                 password: password,
-                name: name
+                name: name,
+                age: age,
+                weight: weight
             }
         });
         const id = newUser.id;

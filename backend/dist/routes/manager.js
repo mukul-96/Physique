@@ -171,12 +171,7 @@ managerRouter.get("/expenselist", managerAuth_1.default, (req, res) => __awaiter
                 branchId: parseInt(branchId)
             }
         });
-        if (data.length > 0) {
-            return res.status(200).json(data);
-        }
-        else {
-            return res.status(500).json({ message: "No data found" });
-        }
+        return res.status(200).json(data.length > 0 ? data : []);
     }
     catch (error) {
         return res.status(500).json({ error });

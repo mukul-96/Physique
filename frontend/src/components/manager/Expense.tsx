@@ -31,10 +31,11 @@ export default function Expense({ branchId, salary }: ExpenseProps) {
   const [selectedYear, setSelectedYear] = useState<number>(currentDate.getFullYear());
 
   useEffect(() => {
-    if (newExpense) {
-      setExpenses((prevExpenses) => [...prevExpenses, newExpense]);
-    }
-  }, [newExpense]);
+  if (newExpense) {
+    setExpenses((prev) => [...prev, newExpense]);
+  }
+}, [newExpense]);
+
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -61,39 +62,30 @@ export default function Expense({ branchId, salary }: ExpenseProps) {
   }, [branchId, selectedMonth, selectedYear]);
 
   useEffect(() => {
-    const calculateExpenses = () => {
-      let totalRent = 0;
-      let totalUtilities = 0;
-      let totalEquipment = 0;
-      let totalMaintenance = 0;
-      let totalMiscellaneous = 0;
-
-      for (let i = 0; i < expenses.length; i++) {
-        const { title, cost } = expenses[i];
-        if (title === "Rent") {
-          totalRent += cost;
-        } else if (title === "Utilities") {
-          totalUtilities += cost;
-        } else if (title === "Equipment") {
-          totalEquipment += cost;
-        } else if (title === "Maintenance") {
-          totalMaintenance += cost;
-        } else if (title === "Miscellaneous") {
-          totalMiscellaneous += cost;
-        }
-      }
-
-      setRent(totalRent);
-      setUtilities(totalUtilities);
-      setEquipment(totalEquipment);
-      setMaintenance(totalMaintenance);
-      setMiscellaneous(totalMiscellaneous);
-    };
-
-    if (expenses.length > 0) {
-      calculateExpenses();
+    if (expenses.length === 0) {
+      setRent(0);
+      setUtilities(0);
+      setEquipment(0);
+      setMaintenance(0);
+      setMiscellaneous(0);
+      return;
     }
+  
+    const totals = expenses.reduce(
+      (acc, { title, cost }) => {
+        acc[title] = (acc[title] || 0) + cost;
+        return acc;
+      },
+      { Rent: 0, Utilities: 0, Equipment: 0, Maintenance: 0, Miscellaneous: 0 } as Record<string, number>
+    );
+  
+    setRent(totals.Rent);
+    setUtilities(totals.Utilities);
+    setEquipment(totals.Equipment);
+    setMaintenance(totals.Maintenance);
+    setMiscellaneous(totals.Miscellaneous);
   }, [expenses]);
+  
 
   return (
     <div className="p-4 bg-gray-100 rounded-md shadow-md">

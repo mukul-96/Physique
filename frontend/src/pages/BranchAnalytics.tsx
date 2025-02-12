@@ -2,7 +2,7 @@ import HeadExpense from "../components/head/HeadExpense";
 import Navbar from "../components/head/Navbar";
 import { useParams } from "react-router-dom";
 import Analytics from "../components/Analytics";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState} from "react";
 import { useFetchBranchDetails } from "../hooks";
 import AnalyticsSkeleton from "../skeletons/AnalyticsSkeleton";
 
@@ -20,15 +20,12 @@ export default function BranchAnalytics() {
   const safeId: string | null = (id ||branchId)?? null;
   const { branchDetails, loading, error } = useFetchBranchDetails(safeId);
 
-  const trainers = useMemo(() =>
-    branchDetails?.staff.filter(staff => staff.designation === "Trainer") || [],
-    [branchDetails]
-  );
 
+ 
   useEffect(() => {
-    const totalSalary = trainers.reduce((sum, trainer) => sum + trainer.salary, 0);
+    const totalSalary = branchDetails?.staff.reduce((sum, staff) => sum + staff.salary, 0) || 0;
     setSalary(totalSalary);
-  }, [trainers]);
+  }, [branchDetails,month,year]);
 
   const handleTotalExpense = (expense: number) => {
     setTotalExpense(expense);
@@ -79,6 +76,7 @@ export default function BranchAnalytics() {
       </div>
 
       <Analytics branchId={safeId} month={month} year={year} totalExpense={totalExpense} />
+      
       <HeadExpense branchId={safeId ? Number(safeId) : null} month={month} year={year} salary={salary} onTotalExpense={handleTotalExpense} />
     </div>
   );

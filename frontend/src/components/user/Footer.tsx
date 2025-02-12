@@ -34,10 +34,8 @@ function Footer() {
                 ></i>
               </div>
               <p className="text-[16px] font-medium text-[#646464]">
-                Privacy Policy | © {new Date().getFullYear()} Physique <br /> Design by{" "}
-                <a target="_blank" rel="noreferrer" href="https://www.radiustheme.com/">
-                  RadiusTheme
-                </a>
+                Privacy Policy | © {new Date().getFullYear()} Physique <br />
+               
               </p>
             </div>
 

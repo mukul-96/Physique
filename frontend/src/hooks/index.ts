@@ -52,6 +52,8 @@ interface User {
   id :number;
   email:string;
   name :string
+  weight:number,
+  age:number,
   password :string;
   balance  : number;
   isActive : boolean;
@@ -116,6 +118,8 @@ interface GymUser {
   email: string;
   name: string;
   balance: number;
+  age:number,
+  weight:number,
   isActive: boolean;
   memberships: History[];
   enrolledIn: Enrollment[];

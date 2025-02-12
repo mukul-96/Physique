@@ -7,6 +7,8 @@ import { BACKEND_URL } from "../config";
 export const SignupDetails = () => {
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [age, setAge] = useState<number | undefined>();
+  const [weight, setWeight] = useState<number | undefined>();
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,18 +20,23 @@ export const SignupDetails = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post<{ token: string }>(url, { email, password, name });
+      const res = await axios.post<{ token: string }>(url, {
+        email,
+        password,
+        name,
+        age,
+        weight,
+      });
       const token = res.data.token;
-      localStorage.setItem("authorization", "Bearer "+token);
-
+      localStorage.setItem("authorization", "Bearer " + token);
       navigate(`/user`);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        setError('An error occurred. Please try again.');
-        console.error('Axios error:', error.response?.data || error.message);
+        setError("An error occurred. Please try again.");
+        console.error("Axios error:", error.response?.data || error.message);
       } else {
-        setError('An unexpected error occurred.');
-        console.error('Unknown error:', error);
+        setError("An unexpected error occurred.");
+        console.error("Unknown error:", error);
       }
     } finally {
       setLoading(false);
@@ -75,6 +82,36 @@ export const SignupDetails = () => {
             />
           </div>
           <div>
+            <label htmlFor="age" className="block mb-2 text-sm font-medium text-gray-900">
+              Your Age
+            </label>
+            <input
+              onChange={(e) => setAge(Number(e.target.value))}
+              type="number"
+              name="age"
+              id="age"
+              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+              placeholder="25"
+              value={age || ""}
+              required
+            />
+          </div>
+          <div>
+            <label htmlFor="weight" className="block mb-2 text-sm font-medium text-gray-900">
+              Your Weight (kg)
+            </label>
+            <input
+              onChange={(e) => setWeight(Number(e.target.value))}
+              type="number"
+              name="weight"
+              id="weight"
+              className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+              placeholder="70"
+              value={weight || ""}
+              required
+            />
+          </div>
+          <div>
             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">
               Password
             </label>
@@ -114,7 +151,7 @@ export const SignupDetails = () => {
             className="w-full text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             disabled={loading}
           >
-            {loading ? <Spinner></Spinner> : 'Sign up'}
+            {loading ? <Spinner /> : "Sign up"}
           </button>
           {error && <p className="text-red-500 text-sm">{error}</p>}
           <p className="text-sm font-light text-purple-800">

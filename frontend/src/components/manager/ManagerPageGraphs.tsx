@@ -55,10 +55,10 @@ export default function ManagerPageGraphs({ branchId }: ManagerPageGraphsProps) 
         </div>
       ) : (
         <>
-          <div className="h-full w-full ">
+          <div className="h-full w-full mt-7 ">
             <TotalCustomersCard count={dailyEntry}/>
           </div>
-          <div className="h-full w-full">
+          <div className="h-full w-full mt-7">
           <TotalSalesCard count={dailySales}/>
 
           </div>

@@ -12,6 +12,8 @@ model User {
   email        String      @unique
   name         String
   password     String
+  weight       Int        @default(70)
+  age          Int        @default(18)
   balance      Int         @default(0)
   dailyFee      Int         @default(0)
   isActive     Boolean     @default(false)

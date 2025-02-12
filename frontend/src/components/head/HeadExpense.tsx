@@ -29,27 +29,51 @@ export default function HeadExpense({ branchId, salary, month, year, onTotalExpe
 
   useEffect(() => {
     const fetchExpenses = async () => {
+      setLoading(true);
+      setError(null);
+  
       try {
         const url = `${BACKEND_URL}manager/expenselist`;
         const token = localStorage.getItem("authorization");
         const res = await axios.get<expenseDetails[]>(url, {
           headers: { Authorization: token ? token : "" },
-          params: { month: month, year: year, branchId },
+          params: { month, year, branchId },
         });
-        setExpenses(res.data);
-        setLoading(false);
-        setError(null);
+  
+        if (res.data.length === 0) {
+          // Only reset if API returns an empty array
+          setExpenses([]);
+          setRent(0);
+          setUtilities(0);
+          setEquipment(0);
+          setMaintenance(0);
+          setMiscellaneous(0);
+          onTotalExpense(0);
+          setError("No DATA AVAILABLE");
+        } else {
+          setExpenses(res.data);
+          setError(null);
+        }
       } catch (error) {
         console.log(error);
         setError("No DATA AVAILABLE");
+        setExpenses([]);
+        setRent(0);
+        setUtilities(0);
+        setEquipment(0);
+        setMaintenance(0);
+        setMiscellaneous(0);
+        onTotalExpense(0);
+      } finally {
+        setLoading(false);
       }
     };
-
+  
     if (branchId) {
       fetchExpenses();
     }
   }, [branchId, month, year]);
-
+  
   useEffect(() => {
     const calculateExpenses = () => {
       let totalRent = 0;
@@ -57,7 +81,7 @@ export default function HeadExpense({ branchId, salary, month, year, onTotalExpe
       let totalEquipment = 0;
       let totalMaintenance = 0;
       let totalMiscellaneous = 0;
-
+  
       for (let i = 0; i < expenses.length; i++) {
         const { title, cost } = expenses[i];
         if (title === "Rent") totalRent += cost;
@@ -66,21 +90,24 @@ export default function HeadExpense({ branchId, salary, month, year, onTotalExpe
         else if (title === "Maintenance") totalMaintenance += cost;
         else if (title === "Miscellaneous") totalMiscellaneous += cost;
       }
-
+  
       setRent(totalRent);
       setUtilities(totalUtilities);
       setEquipment(totalEquipment);
       setMaintenance(totalMaintenance);
       setMiscellaneous(totalMiscellaneous);
-
+  
       const totalExpense = totalRent + totalUtilities + totalEquipment + totalMaintenance + totalMiscellaneous + salary;
-      onTotalExpense(totalExpense); 
+      onTotalExpense(totalExpense);
     };
-
+  
     if (expenses.length > 0) {
       calculateExpenses();
+    } else {
+      onTotalExpense(0); 
     }
-  }, [expenses, salary, onTotalExpense]);
+  }, [expenses, salary, onTotalExpense, branchId, month, year]);
+  
 
   return (
     <div className="p-4 bg-gray-100 rounded-md shadow-md">
@@ -100,7 +127,6 @@ export default function HeadExpense({ branchId, salary, month, year, onTotalExpe
           salary={salary}
         />
       </div>
-
       <div className="mt-6">
         {expenses.length > 0 ? (
           <ExpenseLogCard expenses={expenses} />

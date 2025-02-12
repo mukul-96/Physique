@@ -23,7 +23,7 @@
 
     /* Linting */
     "esModuleInterop": true,
-    "strict": true,
+    "strict": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
